@@ -79,6 +79,8 @@ export const navItems: NavItem[] = [
             { name: "Work From Home", path: "/work-from-home" },
             { name: "Overtime & Extra Hours", path: "/overtime-extra-hours" },
             { name: "Queries & Support", path: "/time-management-queries-support" },
+            { name: "Approval Workflows", path: "/approval-workflows" },
+            { name: "Delegation", path: "/delegations" },
         ],
     },
     {

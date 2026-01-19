@@ -4,16 +4,22 @@ import AppHeader from '@/layout/AppHeader';
 import AllNavigator from '@/layout/AllNavigator';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { SidebarProvider } from '@/context/SidebarContext';
+import { Outfit } from 'next/font/google';
 
 export const metadata: Metadata = {
   title: 'IfBash',
   description: 'Modern HR Service Portal',
 };
 
+
+const outfit = Outfit({
+  subsets: ["latin"],
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="h-screen bg-gray-50 dark:bg-gray-950 antialiased overflow-hidden" suppressHydrationWarning>
+    <html lang="en">
+      <body className={`${outfit.className} dark:bg-gray-950 antialiased overflow-hidden`}>
         <ThemeProvider>
           <SidebarProvider>
             <div className="flex h-screen flex-col">
