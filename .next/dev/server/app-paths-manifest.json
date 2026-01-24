@@ -1,17 +1,4 @@
 {
-  "/(admin)/(others-pages)/approval-workflows/page": "app/(admin)/(others-pages)/approval-workflows/page.js",
-  "/(admin)/(others-pages)/attendance/page": "app/(admin)/(others-pages)/attendance/page.js",
   "/(admin)/(others-pages)/calendar/page": "app/(admin)/(others-pages)/calendar/page.js",
-  "/(admin)/(others-pages)/delegations/page": "app/(admin)/(others-pages)/delegations/page.js",
-  "/(admin)/(others-pages)/holiday-list/page": "app/(admin)/(others-pages)/holiday-list/page.js",
-  "/(admin)/(others-pages)/manage-absence/page": "app/(admin)/(others-pages)/manage-absence/page.js",
-  "/(admin)/(others-pages)/overtime-extra-hours/page": "app/(admin)/(others-pages)/overtime-extra-hours/page.js",
-  "/(admin)/(others-pages)/request-absence/page": "app/(admin)/(others-pages)/request-absence/page.js",
-  "/(admin)/(others-pages)/shift-management/page": "app/(admin)/(others-pages)/shift-management/page.js",
-  "/(admin)/(others-pages)/time-management-queries-support/page": "app/(admin)/(others-pages)/time-management-queries-support/page.js",
-  "/(admin)/(others-pages)/time-off-balance/page": "app/(admin)/(others-pages)/time-off-balance/page.js",
-  "/(admin)/(others-pages)/timesheet/page": "app/(admin)/(others-pages)/timesheet/page.js",
-  "/(admin)/(others-pages)/work-from-home/page": "app/(admin)/(others-pages)/work-from-home/page.js",
-  "/(admin)/page": "app/(admin)/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/(admin)/(others-pages)/request-absence/page": "app/(admin)/(others-pages)/request-absence/page.js"
 }
