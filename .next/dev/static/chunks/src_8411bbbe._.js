@@ -1701,7 +1701,7 @@ function AppHeader() {
         columnNumber: 5
     }, this);
 }
-_s(AppHeader, "ip9YnDmuEGnnu3Fm9bJuFQ/FNuU=", false, function() {
+_s(AppHeader, "yTWSuzX6UUaJMEDoVCg8S7IJTeM=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$SidebarContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSidebar"]
     ];
@@ -2603,7 +2603,7 @@ function AllNavigator() {
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 href: item.path || "#",
                 onClick: ()=>setIsNavigatorOpen(false),
-                className: "   flex items-center justify-between px-4 py-2.5 text-sm rounded-lg   hover:bg-gray-100 dark:hover:bg-gray-800   text-black dark:text-gray-300 transition-colors group   ",
+                className: " flex items-center justify-between px-4 py-2.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-gray-300 transition-colors group ",
                 style: {
                     paddingLeft: depth > 0 ? `calc(1rem + ${paddingLeft})` : '1rem'
                 },
@@ -2721,7 +2721,7 @@ function AllNavigator() {
                                         onChange: (e)=>setSearch(e.target.value),
                                         placeholder: "Filter...",
                                         autoFocus: !isNavigatorPinned,
-                                        className: "   w-full bg-gray-50 dark:bg-gray-900    border border-gray-300 dark:border-gray-700    rounded-lg pl-10 pr-4 py-2.5 text-sm text-black dark:text-white   placeholder:text-gray-500 dark:placeholder:text-gray-400   focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/30   "
+                                        className: " w-full bg-gray-50 dark:bg-gray-900  border border-gray-300 dark:border-gray-700  rounded-lg pl-10 pr-4 py-2.5 text-sm text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/30 "
                                     }, void 0, false, {
                                         fileName: "[project]/src/layout/AllNavigator.tsx",
                                         lineNumber: 193,
@@ -2815,7 +2815,7 @@ function AllNavigator() {
         ]
     }, void 0, true);
 }
-_s(AllNavigator, "bCO41QkDf/vlhdNBE+xaHcrLgxw=", false, function() {
+_s(AllNavigator, "fLkGlBVY2v/RVtNI4QNR3mWU+nA=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$SidebarContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSidebar"]
     ];

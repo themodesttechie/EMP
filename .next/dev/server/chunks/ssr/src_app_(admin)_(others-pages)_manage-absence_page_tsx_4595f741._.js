@@ -296,7 +296,7 @@ function ManageAbsenceComplete() {
                     }, void 0, false, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                         lineNumber: 181,
-                        columnNumber: 9
+                        columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex items-center gap-2 px-3 py-1 bg-white dark:bg-[#111] rounded-full border border-slate-200 dark:border-white/10 shadow-sm",
@@ -306,7 +306,7 @@ function ManageAbsenceComplete() {
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                 lineNumber: 183,
-                                columnNumber: 12
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "text-[10px] font-bold text-slate-500 uppercase tracking-wide",
@@ -314,19 +314,19 @@ function ManageAbsenceComplete() {
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                 lineNumber: 184,
-                                columnNumber: 12
+                                columnNumber: 16
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                         lineNumber: 182,
-                        columnNumber: 9
+                        columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                 lineNumber: 180,
-                columnNumber: 7
+                columnNumber: 10
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex-1 flex gap-4 overflow-hidden min-h-0",
@@ -350,12 +350,12 @@ function ManageAbsenceComplete() {
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                         lineNumber: 198,
-                                                        columnNumber: 172
+                                                        columnNumber: 174
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                     lineNumber: 198,
-                                                    columnNumber: 23
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "relative group",
@@ -371,12 +371,12 @@ function ManageAbsenceComplete() {
                                                                 }, i, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                                     lineNumber: 207,
-                                                                    columnNumber: 51
+                                                                    columnNumber: 53
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                             lineNumber: 202,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                                                             size: 12,
@@ -384,13 +384,13 @@ function ManageAbsenceComplete() {
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                             lineNumber: 209,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                     lineNumber: 201,
-                                                    columnNumber: 23
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "relative group",
@@ -406,12 +406,12 @@ function ManageAbsenceComplete() {
                                                                 }, y, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                                     lineNumber: 219,
-                                                                    columnNumber: 53
+                                                                    columnNumber: 55
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                             lineNumber: 214,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                                                             size: 12,
@@ -419,13 +419,13 @@ function ManageAbsenceComplete() {
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                             lineNumber: 221,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                     lineNumber: 213,
-                                                    columnNumber: 23
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     onClick: nextMonth,
@@ -435,18 +435,18 @@ function ManageAbsenceComplete() {
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                         lineNumber: 224,
-                                                        columnNumber: 172
+                                                        columnNumber: 174
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                     lineNumber: 224,
-                                                    columnNumber: 23
+                                                    columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                             lineNumber: 197,
-                                            columnNumber: 20
+                                            columnNumber: 22
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex items-center gap-2",
@@ -463,7 +463,7 @@ function ManageAbsenceComplete() {
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                         lineNumber: 231,
-                                                        columnNumber: 29
+                                                        columnNumber: 31
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                         onClick: ()=>{
@@ -476,41 +476,41 @@ function ManageAbsenceComplete() {
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                             lineNumber: 232,
-                                                            columnNumber: 155
+                                                            columnNumber: 157
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                         lineNumber: 232,
-                                                        columnNumber: 29
+                                                        columnNumber: 31
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                 lineNumber: 230,
-                                                columnNumber: 26
+                                                columnNumber: 28
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "text-[10px] font-bold text-slate-300 uppercase tracking-widest",
                                                 children: "Select Dates"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                 lineNumber: 235,
-                                                columnNumber: 26
+                                                columnNumber: 28
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                             lineNumber: 228,
-                                            columnNumber: 20
+                                            columnNumber: 22
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                     lineNumber: 195,
-                                    columnNumber: 17
+                                    columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                 lineNumber: 194,
-                                columnNumber: 14
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex-none px-5 py-3 border-b border-slate-100 dark:border-white/5",
@@ -525,20 +525,20 @@ function ManageAbsenceComplete() {
                                             'F',
                                             'S',
                                             'S'
-                                        ].map((d)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        ].map((d, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "text-center text-[9px] font-bold text-slate-300 mb-1",
                                                 children: d
-                                            }, d, false, {
+                                            }, i, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                 lineNumber: 244,
-                                                columnNumber: 60
+                                                columnNumber: 73
                                             }, this)),
                                         Array.from({
                                             length: calendarGrid.offset
                                         }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {}, `empty-${i}`, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                 lineNumber: 245,
-                                                columnNumber: 79
+                                                columnNumber: 81
                                             }, this)),
                                         Array.from({
                                             length: calendarGrid.daysInMonth
@@ -568,8 +568,8 @@ function ManageAbsenceComplete() {
                                                         children: day
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 279,
-                                                        columnNumber: 29
+                                                        lineNumber: 278,
+                                                        columnNumber: 31
                                                     }, this),
                                                     hasActive && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "flex gap-0.5 -mt-0.5",
@@ -577,31 +577,31 @@ function ManageAbsenceComplete() {
                                                                 className: `w-1 h-1 rounded-full ${LEAVE_TYPES[r.type].dot}`
                                                             }, idx, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 283,
-                                                                columnNumber: 38
+                                                                lineNumber: 282,
+                                                                columnNumber: 40
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 281,
-                                                        columnNumber: 32
+                                                        lineNumber: 280,
+                                                        columnNumber: 34
                                                     }, this)
                                                 ]
                                             }, day, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                                 lineNumber: 268,
-                                                columnNumber: 26
+                                                columnNumber: 28
                                             }, this);
                                         })
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                     lineNumber: 243,
-                                    columnNumber: 17
+                                    columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                                 lineNumber: 242,
-                                columnNumber: 14
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex-none px-5 py-3 border-b border-slate-100 dark:border-white/5 bg-slate-50/30 dark:bg-white/[0.01]",
@@ -618,18 +618,18 @@ function ManageAbsenceComplete() {
                                             children: f
                                         }, f, false, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                            lineNumber: 297,
-                                            columnNumber: 23
+                                            lineNumber: 296,
+                                            columnNumber: 25
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                    lineNumber: 295,
-                                    columnNumber: 17
+                                    lineNumber: 294,
+                                    columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                lineNumber: 294,
-                                columnNumber: 14
+                                lineNumber: 293,
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar",
@@ -641,30 +641,30 @@ function ManageAbsenceComplete() {
                                             strokeWidth: 1.5
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                            lineNumber: 316,
-                                            columnNumber: 23
+                                            lineNumber: 314,
+                                            columnNumber: 25
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-xs font-bold mt-2 text-center",
                                             children: "No records found"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                            lineNumber: 317,
-                                            columnNumber: 23
+                                            lineNumber: 315,
+                                            columnNumber: 25
                                         }, this),
                                         rangeStart && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-[10px] mt-1",
                                             children: "Try clearing date filters"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                            lineNumber: 318,
-                                            columnNumber: 38
+                                            lineNumber: 316,
+                                            columnNumber: 40
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                    lineNumber: 315,
-                                    columnNumber: 20
+                                    lineNumber: 313,
+                                    columnNumber: 22
                                 }, this) : filteredList.map((req)=>{
                                     const isSelected = selectedId === req.id;
                                     const { day, month, year } = formatDate(req.start);
@@ -687,22 +687,22 @@ function ManageAbsenceComplete() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 338,
-                                                        columnNumber: 33
+                                                        lineNumber: 334,
+                                                        columnNumber: 34
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: `text-xl font-black leading-none ${isSelected ? "text-white" : "text-slate-900 dark:text-white"}`,
                                                         children: day
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 339,
-                                                        columnNumber: 33
+                                                        lineNumber: 335,
+                                                        columnNumber: 34
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 335,
-                                                columnNumber: 29
+                                                lineNumber: 332,
+                                                columnNumber: 31
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "flex-1 min-w-0",
@@ -715,62 +715,62 @@ function ManageAbsenceComplete() {
                                                                 children: LEAVE_TYPES[req.type].label
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 343,
-                                                                columnNumber: 35
+                                                                lineNumber: 339,
+                                                                columnNumber: 37
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: `text-[9px] font-black uppercase px-2 py-0.5 rounded-full border ${isSelected ? "bg-white/20 border-white/10 text-white" : getStatusStyle(req.status)}`,
                                                                 children: req.status
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 346,
-                                                                columnNumber: 35
+                                                                lineNumber: 342,
+                                                                columnNumber: 37
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 342,
-                                                        columnNumber: 33
+                                                        lineNumber: 338,
+                                                        columnNumber: 34
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: `text-[10px] truncate ${isSelected ? "text-white/60" : "text-slate-500"}`,
                                                         children: req.reason
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 352,
-                                                        columnNumber: 33
+                                                        lineNumber: 347,
+                                                        columnNumber: 34
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 341,
-                                                columnNumber: 29
+                                                lineNumber: 337,
+                                                columnNumber: 31
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
                                                 size: 14,
                                                 className: `opacity-0 group-hover:opacity-100 ${isSelected ? "text-white" : "text-slate-300"}`
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 354,
-                                                columnNumber: 29
+                                                lineNumber: 349,
+                                                columnNumber: 31
                                             }, this)
                                         ]
                                     }, req.id, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 326,
-                                        columnNumber: 27
+                                        lineNumber: 324,
+                                        columnNumber: 28
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                lineNumber: 313,
-                                columnNumber: 14
+                                lineNumber: 311,
+                                columnNumber: 16
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                         lineNumber: 191,
-                        columnNumber: 9
+                        columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex-1 bg-white dark:bg-[#111] rounded-3xl border border-slate-200 dark:border-white/10 flex flex-col shadow-xl overflow-hidden",
@@ -791,22 +791,22 @@ function ManageAbsenceComplete() {
                                                                 children: "Request ID"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 370,
-                                                                columnNumber: 24
+                                                                lineNumber: 365,
+                                                                columnNumber: 28
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "bg-slate-100 dark:bg-white/10 px-1.5 py-0.5 rounded text-[9px] font-mono text-slate-500",
                                                                 children: selectedReq.id
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 371,
-                                                                columnNumber: 24
+                                                                lineNumber: 366,
+                                                                columnNumber: 28
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 369,
-                                                        columnNumber: 21
+                                                        lineNumber: 364,
+                                                        columnNumber: 25
                                                     }, this),
                                                     isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                         className: "text-xl font-black text-indigo-600 flex items-center gap-2",
@@ -815,28 +815,28 @@ function ManageAbsenceComplete() {
                                                                 size: 18
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 374,
-                                                                columnNumber: 99
+                                                                lineNumber: 369,
+                                                                columnNumber: 103
                                                             }, this),
                                                             " Edit Request"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 374,
-                                                        columnNumber: 24
+                                                        lineNumber: 369,
+                                                        columnNumber: 28
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                         className: "text-xl font-black text-slate-900 dark:text-white",
                                                         children: LEAVE_TYPES[selectedReq.type].label
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 376,
-                                                        columnNumber: 24
+                                                        lineNumber: 371,
+                                                        columnNumber: 28
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 368,
-                                                columnNumber: 18
+                                                lineNumber: 363,
+                                                columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: `px-3 py-1.5 rounded-xl border flex items-center gap-2 ${isEditing ? "bg-white border-indigo-200 text-indigo-600" : getStatusStyle(selectedReq.status)}`,
@@ -845,42 +845,42 @@ function ManageAbsenceComplete() {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 382,
-                                                        columnNumber: 59
+                                                        lineNumber: 376,
+                                                        columnNumber: 63
                                                     }, this),
                                                     selectedReq.status === 'Rejected' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__XCircle$3e$__["XCircle"], {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 383,
-                                                        columnNumber: 59
+                                                        lineNumber: 377,
+                                                        columnNumber: 63
                                                     }, this),
                                                     selectedReq.status === 'Pending' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 384,
-                                                        columnNumber: 58
+                                                        lineNumber: 378,
+                                                        columnNumber: 62
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "text-xs font-bold uppercase",
                                                         children: isEditing ? "Drafting..." : selectedReq.status
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 385,
-                                                        columnNumber: 21
+                                                        lineNumber: 379,
+                                                        columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 379,
-                                                columnNumber: 18
+                                                lineNumber: 374,
+                                                columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 367,
-                                        columnNumber: 15
+                                        lineNumber: 362,
+                                        columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "grid grid-cols-2 gap-4",
@@ -893,8 +893,8 @@ function ManageAbsenceComplete() {
                                                         children: "Duration"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 391,
-                                                        columnNumber: 21
+                                                        lineNumber: 385,
+                                                        columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "text-xl font-black text-slate-900 dark:text-white mt-1",
@@ -905,20 +905,20 @@ function ManageAbsenceComplete() {
                                                                 children: "days"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 392,
-                                                                columnNumber: 127
+                                                                lineNumber: 386,
+                                                                columnNumber: 131
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 392,
-                                                        columnNumber: 21
+                                                        lineNumber: 386,
+                                                        columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 390,
-                                                columnNumber: 18
+                                                lineNumber: 384,
+                                                columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "bg-white dark:bg-[#151515] p-3 rounded-xl border border-slate-100 dark:border-white/5",
@@ -928,34 +928,34 @@ function ManageAbsenceComplete() {
                                                         children: "Applied On"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 395,
-                                                        columnNumber: 21
+                                                        lineNumber: 389,
+                                                        columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "text-sm font-bold text-slate-700 dark:text-slate-300 mt-2",
                                                         children: selectedReq.applied
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 396,
-                                                        columnNumber: 21
+                                                        lineNumber: 390,
+                                                        columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 394,
-                                                columnNumber: 18
+                                                lineNumber: 388,
+                                                columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 389,
-                                        columnNumber: 15
+                                        lineNumber: 383,
+                                        columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                lineNumber: 366,
-                                columnNumber: 12
+                                lineNumber: 361,
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex-1 p-6 space-y-8 overflow-y-auto",
@@ -969,22 +969,22 @@ function ManageAbsenceComplete() {
                                                         children: "Timeline"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 405,
-                                                        columnNumber: 21
+                                                        lineNumber: 399,
+                                                        columnNumber: 25
                                                     }, this),
                                                     isEditing && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "text-indigo-600",
                                                         children: "Editable"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 406,
-                                                        columnNumber: 35
+                                                        lineNumber: 400,
+                                                        columnNumber: 39
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 404,
-                                                columnNumber: 18
+                                                lineNumber: 398,
+                                                columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "flex items-center gap-2",
@@ -997,8 +997,8 @@ function ManageAbsenceComplete() {
                                                                 className: isEditing ? "text-indigo-600" : "text-slate-400"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 410,
-                                                                columnNumber: 24
+                                                                lineNumber: 404,
+                                                                columnNumber: 28
                                                             }, this),
                                                             isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                                 type: "date",
@@ -1010,29 +1010,29 @@ function ManageAbsenceComplete() {
                                                                 className: "w-full text-xs font-bold bg-transparent outline-none text-slate-900 dark:text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 412,
-                                                                columnNumber: 27
+                                                                lineNumber: 406,
+                                                                columnNumber: 31
                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-xs font-bold",
                                                                 children: selectedReq.start
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 414,
-                                                                columnNumber: 27
+                                                                lineNumber: 408,
+                                                                columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 409,
-                                                        columnNumber: 21
+                                                        lineNumber: 403,
+                                                        columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUpRight$3e$__["ArrowUpRight"], {
                                                         size: 14,
                                                         className: "text-slate-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 417,
-                                                        columnNumber: 21
+                                                        lineNumber: 411,
+                                                        columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: `flex-1 p-3 rounded-xl border flex items-center gap-3 transition-all ${isEditing ? 'bg-white border-indigo-500 ring-2 ring-indigo-500/10' : 'bg-slate-50 dark:bg-white/5 border-slate-100 dark:border-white/5'}`,
@@ -1042,8 +1042,8 @@ function ManageAbsenceComplete() {
                                                                 className: isEditing ? "text-indigo-600" : "text-slate-400"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 419,
-                                                                columnNumber: 24
+                                                                lineNumber: 413,
+                                                                columnNumber: 28
                                                             }, this),
                                                             isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                                 type: "date",
@@ -1055,33 +1055,33 @@ function ManageAbsenceComplete() {
                                                                 className: "w-full text-xs font-bold bg-transparent outline-none text-slate-900 dark:text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 421,
-                                                                columnNumber: 27
+                                                                lineNumber: 415,
+                                                                columnNumber: 31
                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-xs font-bold",
                                                                 children: selectedReq.end
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 423,
-                                                                columnNumber: 27
+                                                                lineNumber: 417,
+                                                                columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 418,
-                                                        columnNumber: 21
+                                                        lineNumber: 412,
+                                                        columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 408,
-                                                columnNumber: 18
+                                                lineNumber: 402,
+                                                columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 403,
-                                        columnNumber: 15
+                                        lineNumber: 397,
+                                        columnNumber: 19
                                     }, this),
                                     !isEditing && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                                         children: [
@@ -1090,8 +1090,8 @@ function ManageAbsenceComplete() {
                                                 children: "Approval Chain"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 431,
-                                                columnNumber: 21
+                                                lineNumber: 425,
+                                                columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "relative pl-6 border-l-2 border-slate-100 dark:border-white/5 space-y-6",
@@ -1102,16 +1102,16 @@ function ManageAbsenceComplete() {
                                                                 className: `absolute -left-[29px] top-0 w-3 h-3 rounded-full border-2 border-white dark:border-[#111] z-10 ${selectedReq.status === 'Approved' ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-white/20'}`
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 435,
-                                                                columnNumber: 30
+                                                                lineNumber: 429,
+                                                                columnNumber: 34
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-xs font-bold text-slate-900 dark:text-white",
                                                                 children: p
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 438,
-                                                                columnNumber: 30
+                                                                lineNumber: 431,
+                                                                columnNumber: 34
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-[9px] font-medium text-slate-400 uppercase mt-0.5",
@@ -1123,25 +1123,25 @@ function ManageAbsenceComplete() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                                lineNumber: 439,
-                                                                columnNumber: 30
+                                                                lineNumber: 432,
+                                                                columnNumber: 34
                                                             }, this)
                                                         ]
                                                     }, i, true, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 434,
-                                                        columnNumber: 27
+                                                        lineNumber: 428,
+                                                        columnNumber: 31
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 432,
-                                                columnNumber: 21
+                                                lineNumber: 426,
+                                                columnNumber: 25
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 430,
-                                        columnNumber: 18
+                                        lineNumber: 424,
+                                        columnNumber: 22
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                                         className: "flex-1",
@@ -1151,8 +1151,8 @@ function ManageAbsenceComplete() {
                                                 children: "Justification"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 447,
-                                                columnNumber: 18
+                                                lineNumber: 440,
+                                                columnNumber: 22
                                             }, this),
                                             isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
                                                 className: "w-full h-32 p-4 bg-white border border-indigo-500 rounded-2xl text-xs font-medium focus:ring-2 focus:ring-indigo-500/20 outline-none resize-none",
@@ -1163,8 +1163,8 @@ function ManageAbsenceComplete() {
                                                     })
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 449,
-                                                columnNumber: 21
+                                                lineNumber: 442,
+                                                columnNumber: 25
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "p-4 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/5 text-xs font-medium leading-relaxed text-slate-600 dark:text-slate-300 relative",
                                                 children: [
@@ -1173,34 +1173,34 @@ function ManageAbsenceComplete() {
                                                         children: '"'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 456,
-                                                        columnNumber: 25
+                                                        lineNumber: 449,
+                                                        columnNumber: 28
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "relative z-10 pl-4",
                                                         children: selectedReq.reason
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 457,
-                                                        columnNumber: 25
+                                                        lineNumber: 450,
+                                                        columnNumber: 28
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 455,
-                                                columnNumber: 21
+                                                lineNumber: 448,
+                                                columnNumber: 25
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 446,
-                                        columnNumber: 15
+                                        lineNumber: 439,
+                                        columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                lineNumber: 402,
-                                columnNumber: 12
+                                lineNumber: 396,
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "p-5 border-t border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02]",
@@ -1215,15 +1215,15 @@ function ManageAbsenceComplete() {
                                                     size: 14
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                    lineNumber: 468,
-                                                    columnNumber: 24
+                                                    lineNumber: 461,
+                                                    columnNumber: 28
                                                 }, this),
                                                 " Cancel"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                            lineNumber: 467,
-                                            columnNumber: 21
+                                            lineNumber: 460,
+                                            columnNumber: 25
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: handleSave,
@@ -1233,21 +1233,21 @@ function ManageAbsenceComplete() {
                                                     size: 14
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                    lineNumber: 471,
-                                                    columnNumber: 24
+                                                    lineNumber: 464,
+                                                    columnNumber: 28
                                                 }, this),
                                                 " Save Changes"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                            lineNumber: 470,
-                                            columnNumber: 21
+                                            lineNumber: 463,
+                                            columnNumber: 25
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                    lineNumber: 466,
-                                    columnNumber: 19
+                                    lineNumber: 459,
+                                    columnNumber: 22
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                                     children: selectedReq.status === 'Pending' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "grid grid-cols-2 gap-3",
@@ -1263,15 +1263,15 @@ function ManageAbsenceComplete() {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 479,
-                                                        columnNumber: 28
+                                                        lineNumber: 472,
+                                                        columnNumber: 34
                                                     }, this),
                                                     " Edit"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 478,
-                                                columnNumber: 25
+                                                lineNumber: 471,
+                                                columnNumber: 31
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>handleWithdraw(selectedReq.id),
@@ -1281,21 +1281,21 @@ function ManageAbsenceComplete() {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                        lineNumber: 482,
-                                                        columnNumber: 28
+                                                        lineNumber: 475,
+                                                        columnNumber: 34
                                                     }, this),
                                                     " Withdraw"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 481,
-                                                columnNumber: 25
+                                                lineNumber: 474,
+                                                columnNumber: 31
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 477,
-                                        columnNumber: 22
+                                        lineNumber: 470,
+                                        columnNumber: 28
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         disabled: true,
                                         className: "w-full py-3.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 font-bold text-xs uppercase tracking-wider text-slate-400 flex items-center justify-center gap-2 cursor-not-allowed",
@@ -1304,39 +1304,39 @@ function ManageAbsenceComplete() {
                                                 size: 14
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                                lineNumber: 487,
-                                                columnNumber: 25
+                                                lineNumber: 480,
+                                                columnNumber: 31
                                             }, this),
                                             selectedReq.status === 'Cancelled' ? 'Request Withdrawn' : 'Modification Locked'
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                        lineNumber: 486,
-                                        columnNumber: 22
+                                        lineNumber: 479,
+                                        columnNumber: 28
                                     }, this)
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                                lineNumber: 464,
-                                columnNumber: 12
+                                lineNumber: 457,
+                                columnNumber: 16
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
-                        lineNumber: 363,
-                        columnNumber: 9
+                        lineNumber: 358,
+                        columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
                 lineNumber: 188,
-                columnNumber: 7
+                columnNumber: 10
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(admin)/(others-pages)/manage-absence/page.tsx",
         lineNumber: 177,
-        columnNumber: 5
+        columnNumber: 7
     }, this);
 }
 }),

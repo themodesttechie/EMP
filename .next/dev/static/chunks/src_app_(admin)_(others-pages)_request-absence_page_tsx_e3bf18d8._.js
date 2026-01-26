@@ -383,12 +383,12 @@ function FullyFunctionalPortal() {
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                     lineNumber: 232,
-                                    columnNumber: 70
+                                    columnNumber: 73
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                 lineNumber: 232,
-                                columnNumber: 13
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                 className: "text-xl font-bold text-slate-900 dark:text-white tracking-tight",
@@ -396,13 +396,13 @@ function FullyFunctionalPortal() {
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                 lineNumber: 233,
-                                columnNumber: 13
+                                columnNumber: 16
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                         lineNumber: 231,
-                        columnNumber: 10
+                        columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex items-center gap-2",
@@ -412,7 +412,7 @@ function FullyFunctionalPortal() {
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                 lineNumber: 236,
-                                columnNumber: 13
+                                columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "text-xs font-medium text-slate-500",
@@ -420,19 +420,19 @@ function FullyFunctionalPortal() {
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                 lineNumber: 237,
-                                columnNumber: 13
+                                columnNumber: 16
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                         lineNumber: 235,
-                        columnNumber: 10
+                        columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                 lineNumber: 230,
-                columnNumber: 7
+                columnNumber: 10
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex-1 flex overflow-hidden",
@@ -459,12 +459,12 @@ function FullyFunctionalPortal() {
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                                 lineNumber: 253,
-                                                                columnNumber: 125
+                                                                columnNumber: 127
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                             lineNumber: 253,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                             className: "text-base font-bold text-slate-900 dark:text-white w-32 text-center select-none",
@@ -472,7 +472,7 @@ function FullyFunctionalPortal() {
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                             lineNumber: 254,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                             onClick: nextMonth,
@@ -482,18 +482,18 @@ function FullyFunctionalPortal() {
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                                 lineNumber: 255,
-                                                                columnNumber: 125
+                                                                columnNumber: 127
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                             lineNumber: 255,
-                                                            columnNumber: 26
+                                                            columnNumber: 28
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                     lineNumber: 252,
-                                                    columnNumber: 22
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     onClick: jumpToday,
@@ -502,13 +502,13 @@ function FullyFunctionalPortal() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                     lineNumber: 257,
-                                                    columnNumber: 22
+                                                    columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                             lineNumber: 251,
-                                            columnNumber: 18
+                                            columnNumber: 22
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex gap-2 items-center",
@@ -533,12 +533,12 @@ function FullyFunctionalPortal() {
                                                         }, m, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                             lineNumber: 263,
-                                                            columnNumber: 25
+                                                            columnNumber: 31
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                                     lineNumber: 261,
-                                                    columnNumber: 21
+                                                    columnNumber: 25
                                                 }, this),
                                                 (range.start || multiDates.length > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     onClick: ()=>{
@@ -553,25 +553,25 @@ function FullyFunctionalPortal() {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                        lineNumber: 277,
-                                                        columnNumber: 230
+                                                        lineNumber: 276,
+                                                        columnNumber: 237
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 277,
-                                                    columnNumber: 25
+                                                    lineNumber: 276,
+                                                    columnNumber: 28
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                             lineNumber: 260,
-                                            columnNumber: 18
+                                            columnNumber: 22
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                                     lineNumber: 250,
-                                    columnNumber: 15
+                                    columnNumber: 19
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex-1 p-4 overflow-y-auto",
@@ -586,20 +586,20 @@ function FullyFunctionalPortal() {
                                                 'F',
                                                 'S',
                                                 'S'
-                                            ].map((d)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            ].map((d, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "text-center text-[10px] font-bold text-slate-400 uppercase mb-1",
                                                     children: d
-                                                }, d, false, {
+                                                }, i, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 286,
-                                                    columnNumber: 24
+                                                    lineNumber: 285,
+                                                    columnNumber: 28
                                                 }, this)),
                                             Array.from({
                                                 length: calendarData.firstDayOfWeek
                                             }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {}, `e-${i}`, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 288,
-                                                    columnNumber: 88
+                                                    lineNumber: 289,
+                                                    columnNumber: 92
                                                 }, this)),
                                             Array.from({
                                                 length: calendarData.daysInMonth
@@ -616,7 +616,7 @@ function FullyFunctionalPortal() {
                                                 else {
                                                     isSelected = range.start === dateStr || range.end === dateStr;
                                                     // Fix: Handle single day selection in range mode visually
-                                                    inRange = range.start && range.end && dateStr > range.start && dateStr < range.end;
+                                                    inRange = Boolean(range.start && range.end && dateStr > range.start && dateStr < range.end);
                                                 }
                                                 let btnClass = "border border-slate-100 dark:border-white/5 bg-white dark:bg-[#151515] text-slate-600 dark:text-slate-400 hover:border-indigo-300";
                                                 let label = null;
@@ -631,16 +631,16 @@ function FullyFunctionalPortal() {
                                                                     className: "h-2 w-2"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 314,
-                                                                    columnNumber: 82
+                                                                    lineNumber: 315,
+                                                                    columnNumber: 84
                                                                 }, this),
                                                                 " ",
                                                                 existing.label
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 314,
-                                                            columnNumber: 40
+                                                            lineNumber: 315,
+                                                            columnNumber: 42
                                                         }, this);
                                                         isDisabled = true;
                                                     } else if (existing.status === 'pending') {
@@ -652,16 +652,16 @@ function FullyFunctionalPortal() {
                                                                     className: "h-2 w-2"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 318,
-                                                                    columnNumber: 82
+                                                                    lineNumber: 319,
+                                                                    columnNumber: 84
                                                                 }, this),
                                                                 " ",
                                                                 existing.label
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 318,
-                                                            columnNumber: 40
+                                                            lineNumber: 319,
+                                                            columnNumber: 42
                                                         }, this);
                                                         isDisabled = true;
                                                     } else if (existing.status === 'rejected') {
@@ -673,15 +673,15 @@ function FullyFunctionalPortal() {
                                                                     className: "h-2 w-2"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 322,
-                                                                    columnNumber: 96
+                                                                    lineNumber: 323,
+                                                                    columnNumber: 98
                                                                 }, this),
                                                                 " Retry"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 322,
-                                                            columnNumber: 54
+                                                            lineNumber: 323,
+                                                            columnNumber: 56
                                                         }, this) : null;
                                                         isDisabled = false;
                                                     }
@@ -705,16 +705,16 @@ function FullyFunctionalPortal() {
                                                             children: day
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 343,
-                                                            columnNumber: 30
+                                                            lineNumber: 344,
+                                                            columnNumber: 34
                                                         }, this),
                                                         label && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: `absolute bottom-1 left-1 right-1 text-[8px] font-bold px-1 rounded truncate ${isSelected ? 'bg-white/20 text-white' : 'bg-white/60 dark:bg-black/40'}`,
                                                             children: label
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 344,
-                                                            columnNumber: 40
+                                                            lineNumber: 345,
+                                                            columnNumber: 44
                                                         }, this),
                                                         isSelected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "absolute top-1.5 right-1.5",
@@ -722,31 +722,31 @@ function FullyFunctionalPortal() {
                                                                 className: "h-2.5 w-2.5 text-indigo-200 animate-pulse"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                lineNumber: 345,
-                                                                columnNumber: 90
+                                                                lineNumber: 346,
+                                                                columnNumber: 94
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 345,
-                                                            columnNumber: 45
+                                                            lineNumber: 346,
+                                                            columnNumber: 49
                                                         }, this)
                                                     ]
                                                 }, day, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 337,
-                                                    columnNumber: 27
+                                                    lineNumber: 338,
+                                                    columnNumber: 31
                                                 }, this);
                                             })
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                        lineNumber: 284,
-                                        columnNumber: 18
+                                        lineNumber: 283,
+                                        columnNumber: 22
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                    lineNumber: 283,
-                                    columnNumber: 15
+                                    lineNumber: 282,
+                                    columnNumber: 19
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex-none px-5 py-2 border-t border-slate-100 dark:border-white/10 flex gap-4 text-[9px] font-bold uppercase tracking-wider text-slate-400",
@@ -758,15 +758,15 @@ function FullyFunctionalPortal() {
                                                     className: "w-2 h-2 rounded-full bg-emerald-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 353,
-                                                    columnNumber: 62
+                                                    lineNumber: 354,
+                                                    columnNumber: 65
                                                 }, this),
                                                 "Approved"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 353,
-                                            columnNumber: 19
+                                            lineNumber: 354,
+                                            columnNumber: 22
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex items-center gap-1.5",
@@ -775,15 +775,15 @@ function FullyFunctionalPortal() {
                                                     className: "w-2 h-2 rounded-full bg-amber-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 354,
-                                                    columnNumber: 62
+                                                    lineNumber: 355,
+                                                    columnNumber: 65
                                                 }, this),
                                                 "Pending"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 354,
-                                            columnNumber: 19
+                                            lineNumber: 355,
+                                            columnNumber: 22
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex items-center gap-1.5",
@@ -792,32 +792,32 @@ function FullyFunctionalPortal() {
                                                     className: "w-2 h-2 rounded-full bg-rose-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 355,
-                                                    columnNumber: 62
+                                                    lineNumber: 356,
+                                                    columnNumber: 65
                                                 }, this),
                                                 "Rejected (Click to Retry)"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 355,
-                                            columnNumber: 19
+                                            lineNumber: 356,
+                                            columnNumber: 22
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                    lineNumber: 352,
-                                    columnNumber: 15
+                                    lineNumber: 353,
+                                    columnNumber: 19
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                             lineNumber: 247,
-                            columnNumber: 12
+                            columnNumber: 16
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                         lineNumber: 245,
-                        columnNumber: 9
+                        columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "w-[360px] flex flex-col p-4 pl-0 gap-4 min-w-0 z-20",
@@ -836,8 +836,8 @@ function FullyFunctionalPortal() {
                                                     children: "Leave Type"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 367,
-                                                    columnNumber: 21
+                                                    lineNumber: 368,
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     onClick: ()=>setIsDropdownOpen(!isDropdownOpen),
@@ -852,40 +852,40 @@ function FullyFunctionalPortal() {
                                                                         className: "h-3.5 w-3.5"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                        lineNumber: 369,
-                                                                        columnNumber: 142
+                                                                        lineNumber: 370,
+                                                                        columnNumber: 146
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 369,
-                                                                    columnNumber: 65
+                                                                    lineNumber: 370,
+                                                                    columnNumber: 69
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     className: "text-sm font-bold text-slate-800 dark:text-white",
                                                                     children: selectedType.label
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 369,
-                                                                    columnNumber: 193
+                                                                    lineNumber: 370,
+                                                                    columnNumber: 197
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 369,
-                                                            columnNumber: 24
+                                                            lineNumber: 370,
+                                                            columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                                                             className: `h-3.5 w-3.5 text-slate-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 370,
-                                                            columnNumber: 24
+                                                            lineNumber: 371,
+                                                            columnNumber: 28
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 368,
-                                                    columnNumber: 21
+                                                    lineNumber: 369,
+                                                    columnNumber: 25
                                                 }, this),
                                                 isDropdownOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl z-50 max-h-[300px] overflow-y-auto p-1 custom-scrollbar",
@@ -905,52 +905,52 @@ function FullyFunctionalPortal() {
                                                                                 className: "h-3.5 w-3.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                                lineNumber: 376,
-                                                                                columnNumber: 129
+                                                                                lineNumber: 377,
+                                                                                columnNumber: 133
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                            lineNumber: 376,
-                                                                            columnNumber: 74
+                                                                            lineNumber: 377,
+                                                                            columnNumber: 78
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             className: "text-xs font-bold text-slate-700 dark:text-slate-300",
                                                                             children: t.label
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                            lineNumber: 376,
-                                                                            columnNumber: 169
+                                                                            lineNumber: 377,
+                                                                            columnNumber: 173
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 376,
-                                                                    columnNumber: 33
+                                                                    lineNumber: 377,
+                                                                    columnNumber: 37
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     className: "text-[9px] font-bold text-slate-400 bg-slate-100 dark:bg-white/10 px-2 py-1 rounded-md",
                                                                     children: t.balance
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 377,
-                                                                    columnNumber: 33
+                                                                    lineNumber: 378,
+                                                                    columnNumber: 37
                                                                 }, this)
                                                             ]
                                                         }, t.id, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 375,
-                                                            columnNumber: 30
+                                                            lineNumber: 376,
+                                                            columnNumber: 34
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 373,
-                                                    columnNumber: 24
+                                                    lineNumber: 374,
+                                                    columnNumber: 28
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 366,
-                                            columnNumber: 18
+                                            lineNumber: 367,
+                                            columnNumber: 22
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex justify-between bg-slate-50 dark:bg-white/5 p-3 rounded-xl items-center border border-slate-100 dark:border-white/5",
@@ -963,22 +963,22 @@ function FullyFunctionalPortal() {
                                                             children: "Days"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 385,
-                                                            columnNumber: 108
+                                                            lineNumber: 386,
+                                                            columnNumber: 112
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "text-lg font-black text-slate-900 dark:text-white mt-1",
                                                             children: stats.days
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 385,
-                                                            columnNumber: 192
+                                                            lineNumber: 386,
+                                                            columnNumber: 196
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 385,
-                                                    columnNumber: 21
+                                                    lineNumber: 386,
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "text-center w-1/2 pl-2",
@@ -988,8 +988,8 @@ function FullyFunctionalPortal() {
                                                             children: "Deduction"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 386,
-                                                            columnNumber: 61
+                                                            lineNumber: 387,
+                                                            columnNumber: 65
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                             className: "text-lg font-black text-rose-500 mt-1",
@@ -999,26 +999,26 @@ function FullyFunctionalPortal() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 386,
-                                                            columnNumber: 150
+                                                            lineNumber: 387,
+                                                            columnNumber: 154
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 386,
-                                                    columnNumber: 21
+                                                    lineNumber: 387,
+                                                    columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 384,
-                                            columnNumber: 18
+                                            lineNumber: 385,
+                                            columnNumber: 22
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                    lineNumber: 365,
-                                    columnNumber: 15
+                                    lineNumber: 366,
+                                    columnNumber: 19
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex-1 p-4 space-y-4 overflow-y-auto custom-scrollbar",
@@ -1030,8 +1030,8 @@ function FullyFunctionalPortal() {
                                                     className: "h-3.5 w-3.5"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 392,
-                                                    columnNumber: 222
+                                                    lineNumber: 393,
+                                                    columnNumber: 226
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: [
@@ -1044,20 +1044,20 @@ function FullyFunctionalPortal() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 392,
-                                                            columnNumber: 285
+                                                            lineNumber: 393,
+                                                            columnNumber: 289
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 392,
-                                                    columnNumber: 260
+                                                    lineNumber: 393,
+                                                    columnNumber: 264
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 392,
-                                            columnNumber: 43
+                                            lineNumber: 393,
+                                            columnNumber: 47
                                         }, this),
                                         stats.sandwichWarning && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex items-start gap-2 text-[10px] bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 p-2 rounded-lg border border-amber-100 dark:border-amber-800/30 animate-in fade-in",
@@ -1066,8 +1066,8 @@ function FullyFunctionalPortal() {
                                                     className: "h-3.5 w-3.5 shrink-0 mt-0.5"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 394,
-                                                    columnNumber: 247
+                                                    lineNumber: 395,
+                                                    columnNumber: 251
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: [
@@ -1075,21 +1075,21 @@ function FullyFunctionalPortal() {
                                                             children: "Policy Alert:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 394,
-                                                            columnNumber: 310
+                                                            lineNumber: 395,
+                                                            columnNumber: 314
                                                         }, this),
                                                         " Weekends bridged."
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 394,
-                                                    columnNumber: 304
+                                                    lineNumber: 395,
+                                                    columnNumber: 308
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 394,
-                                            columnNumber: 44
+                                            lineNumber: 395,
+                                            columnNumber: 48
                                         }, this),
                                         isCoverRequired && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "animate-in slide-in-from-right-4",
@@ -1103,14 +1103,14 @@ function FullyFunctionalPortal() {
                                                             children: "* Required"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 398,
-                                                            columnNumber: 127
+                                                            lineNumber: 399,
+                                                            columnNumber: 131
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 398,
-                                                    columnNumber: 24
+                                                    lineNumber: 399,
+                                                    columnNumber: 28
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "relative",
@@ -1125,8 +1125,8 @@ function FullyFunctionalPortal() {
                                                                     children: "Select colleague..."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 401,
-                                                                    columnNumber: 30
+                                                                    lineNumber: 402,
+                                                                    columnNumber: 34
                                                                 }, this),
                                                                 COMPANY_CONFIG.colleagues.map((c)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                         value: c.id,
@@ -1138,33 +1138,33 @@ function FullyFunctionalPortal() {
                                                                         ]
                                                                     }, c.id, true, {
                                                                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                        lineNumber: 402,
-                                                                        columnNumber: 66
+                                                                        lineNumber: 403,
+                                                                        columnNumber: 70
                                                                     }, this))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 400,
-                                                            columnNumber: 27
+                                                            lineNumber: 401,
+                                                            columnNumber: 31
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
                                                             className: "absolute right-3 top-3 h-3.5 w-3.5 text-slate-400 pointer-events-none"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 404,
-                                                            columnNumber: 27
+                                                            lineNumber: 405,
+                                                            columnNumber: 31
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 399,
-                                                    columnNumber: 24
+                                                    lineNumber: 400,
+                                                    columnNumber: 28
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 397,
-                                            columnNumber: 21
+                                            lineNumber: 398,
+                                            columnNumber: 25
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             children: [
@@ -1173,8 +1173,8 @@ function FullyFunctionalPortal() {
                                                     children: "Reason"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 410,
-                                                    columnNumber: 21
+                                                    lineNumber: 411,
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
                                                     className: "w-full h-20 rounded-xl bg-slate-50 dark:bg-white/5 p-3 text-xs font-medium text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-black outline-none resize-none placeholder:text-slate-400",
@@ -1183,14 +1183,14 @@ function FullyFunctionalPortal() {
                                                     onChange: (e)=>setReason(e.target.value)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 411,
-                                                    columnNumber: 21
+                                                    lineNumber: 412,
+                                                    columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 409,
-                                            columnNumber: 18
+                                            lineNumber: 410,
+                                            columnNumber: 22
                                         }, this),
                                         selectedType.requiresDoc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "animate-in zoom-in-95",
@@ -1202,8 +1202,8 @@ function FullyFunctionalPortal() {
                                                             children: "Proof"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 421,
-                                                            columnNumber: 134
+                                                            lineNumber: 422,
+                                                            columnNumber: 140
                                                         }, this),
                                                         " ",
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1211,14 +1211,14 @@ function FullyFunctionalPortal() {
                                                             children: "* Required"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 421,
-                                                            columnNumber: 153
+                                                            lineNumber: 422,
+                                                            columnNumber: 159
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 421,
-                                                    columnNumber: 22
+                                                    lineNumber: 422,
+                                                    columnNumber: 28
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     onClick: ()=>fileInputRef.current?.click(),
@@ -1231,8 +1231,8 @@ function FullyFunctionalPortal() {
                                                             onChange: (e)=>e.target.files && setFile(e.target.files[0])
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 423,
-                                                            columnNumber: 25
+                                                            lineNumber: 424,
+                                                            columnNumber: 31
                                                         }, this),
                                                         file ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2",
@@ -1241,8 +1241,8 @@ function FullyFunctionalPortal() {
                                                                     className: "h-3.5 w-3.5"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 424,
-                                                                    columnNumber: 132
+                                                                    lineNumber: 425,
+                                                                    columnNumber: 138
                                                                 }, this),
                                                                 " ",
                                                                 file.name.slice(0, 15),
@@ -1250,8 +1250,8 @@ function FullyFunctionalPortal() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 424,
-                                                            columnNumber: 33
+                                                            lineNumber: 425,
+                                                            columnNumber: 39
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex items-center gap-2 text-slate-400",
                                                             children: [
@@ -1259,8 +1259,8 @@ function FullyFunctionalPortal() {
                                                                     className: "h-3.5 w-3.5"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 424,
-                                                                    columnNumber: 264
+                                                                    lineNumber: 425,
+                                                                    columnNumber: 272
                                                                 }, this),
                                                                 " ",
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1268,32 +1268,32 @@ function FullyFunctionalPortal() {
                                                                     children: "Upload"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 424,
-                                                                    columnNumber: 304
+                                                                    lineNumber: 425,
+                                                                    columnNumber: 312
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 424,
-                                                            columnNumber: 208
+                                                            lineNumber: 425,
+                                                            columnNumber: 216
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 422,
-                                                    columnNumber: 22
+                                                    lineNumber: 423,
+                                                    columnNumber: 28
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 420,
-                                            columnNumber: 19
+                                            lineNumber: 421,
+                                            columnNumber: 25
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                    lineNumber: 391,
-                                    columnNumber: 15
+                                    lineNumber: 392,
+                                    columnNumber: 19
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex-none p-4 border-t border-slate-100 dark:border-white/10 bg-slate-50/50 dark:bg-white/5 space-y-3",
@@ -1305,8 +1305,8 @@ function FullyFunctionalPortal() {
                                                     children: "Review Chain"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 433,
-                                                    columnNumber: 21
+                                                    lineNumber: 434,
+                                                    columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "flex items-center gap-2",
@@ -1320,8 +1320,8 @@ function FullyFunctionalPortal() {
                                                                             children: p.avatar
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                            lineNumber: 438,
-                                                                            columnNumber: 33
+                                                                            lineNumber: 439,
+                                                                            columnNumber: 37
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "truncate",
@@ -1330,43 +1330,43 @@ function FullyFunctionalPortal() {
                                                                                 children: p.name
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                                lineNumber: 439,
-                                                                                columnNumber: 59
+                                                                                lineNumber: 440,
+                                                                                columnNumber: 63
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                            lineNumber: 439,
-                                                                            columnNumber: 33
+                                                                            lineNumber: 440,
+                                                                            columnNumber: 37
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 437,
-                                                                    columnNumber: 30
+                                                                    lineNumber: 438,
+                                                                    columnNumber: 34
                                                                 }, this),
                                                                 i < COMPANY_CONFIG.approvers.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
                                                                     className: "h-3 w-3 text-slate-300"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                                    lineNumber: 441,
-                                                                    columnNumber: 74
+                                                                    lineNumber: 442,
+                                                                    columnNumber: 78
                                                                 }, this)
                                                             ]
                                                         }, i, true, {
                                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                            lineNumber: 436,
-                                                            columnNumber: 27
+                                                            lineNumber: 437,
+                                                            columnNumber: 31
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                                    lineNumber: 434,
-                                                    columnNumber: 21
+                                                    lineNumber: 435,
+                                                    columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 432,
-                                            columnNumber: 18
+                                            lineNumber: 433,
+                                            columnNumber: 22
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             disabled: isBtnDisabled,
@@ -1374,37 +1374,37 @@ function FullyFunctionalPortal() {
                                             children: btnText
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                            lineNumber: 446,
-                                            columnNumber: 18
+                                            lineNumber: 447,
+                                            columnNumber: 22
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                                    lineNumber: 431,
-                                    columnNumber: 15
+                                    lineNumber: 432,
+                                    columnNumber: 19
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                            lineNumber: 362,
-                            columnNumber: 12
+                            lineNumber: 363,
+                            columnNumber: 16
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
-                        lineNumber: 361,
-                        columnNumber: 9
+                        lineNumber: 362,
+                        columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
                 lineNumber: 242,
-                columnNumber: 7
+                columnNumber: 10
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(admin)/(others-pages)/request-absence/page.tsx",
         lineNumber: 227,
-        columnNumber: 5
+        columnNumber: 7
     }, this);
 }
 _s(FullyFunctionalPortal, "jWCzk/4U0MeiTwlnUnWE1hqZ1u8=");

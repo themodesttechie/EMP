@@ -3,7 +3,34 @@
     "[project]/src/app/(admin)/(others-pages)/calendar/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
+    "[project]/src/app/(admin)/(others-pages)/holiday-list/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/(others-pages)/manage-absence/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/(others-pages)/overtime-extra-hours/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
     "[project]/src/app/(admin)/(others-pages)/request-absence/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/(others-pages)/shift-management/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/(others-pages)/time-off-balance/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/(others-pages)/timesheet/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/(others-pages)/work-from-home/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/(admin)/page": [
+      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
+    ],
+    "[project]/src/app/_not-found/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ]
   },
