@@ -71,7 +71,6 @@ export const navItems: NavItem[] = [
             { name: "Request Absence", path: "/request-absence" },
             { name: "Manage Absence", path: "/manage-absence" },
             { name: "Time off - Balance", path: "/time-off-balance" },
-            { name: "Calendar", path: "/calendar" },
             { name: "Holiday List", path: "/holiday-list" },
             { name: "Timesheet", path: "/timesheet" },
             { name: "Attendance", path: "/attendance" },
