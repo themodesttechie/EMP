@@ -1,0 +1,3 @@
+{
+  "/(admin)/(asset-management)/request-asset/page": "app/(admin)/(asset-management)/request-asset/page.js"
+}

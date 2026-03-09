@@ -4,7 +4,9 @@
 import { useSidebar } from "@/context/SidebarContext";
 
 export default function Backdrop() {
-  const { isMobileOpen, toggleMobileSidebar } = useSidebar();
+  const { isNavigatorOpen: isMobileOpen, setIsNavigatorOpen } = useSidebar();
+  const toggleMobileSidebar = () => setIsNavigatorOpen(!isMobileOpen);
+
 
   if (!isMobileOpen) return null;
 

@@ -311,7 +311,8 @@ const othersItems: NavItem[] = [
 ];
 
 const AppSidebar: React.FC = () => {
-  const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const { isNavigatorPinned: isExpanded, isNavigatorOpen: isMobileOpen } = useSidebar();
+  const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
 
   const renderMenuItems = (navItems: NavItem[], menuType: "main") => (

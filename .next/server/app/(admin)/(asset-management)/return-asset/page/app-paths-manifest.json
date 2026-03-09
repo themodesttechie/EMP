@@ -1,0 +1,3 @@
+{
+  "/(admin)/(asset-management)/return-asset/page": "app/(admin)/(asset-management)/return-asset/page.js"
+}

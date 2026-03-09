@@ -568,7 +568,7 @@ export default function CompleteTimesheet() {
                     <div className="bg-white dark:bg-slate-900 rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl animate-in zoom-in-95">
                         <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"><Lock size={32} /></div>
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Confirm Submission</h3>
-                        <p className="text-sm text-slate-500 mb-6">Lock week of <strong>{currentWeekKey}</strong>? Total: <strong>{stats.stats.total}h</strong>.</p>
+                        <p className="text-sm text-slate-500 mb-6">Lock week of <strong>{currentWeekKey}</strong>? Total: <strong>{stats.total}h</strong>.</p>
                         <div className="flex gap-3 justify-center">
                             <button onClick={() => setIsSubmitModalOpen(false)} className="px-5 py-2 rounded-lg font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
                             <button onClick={handleSubmit} className="px-6 py-2 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700">Confirm</button>

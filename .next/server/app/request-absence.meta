@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(admin)/layout,_N_T_/(admin)/(others-pages)/layout,_N_T_/(admin)/(others-pages)/request-absence/layout,_N_T_/(admin)/(others-pages)/request-absence/page,_N_T_/request-absence"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGFkbWluKQ/!KG90aGVycy1wYWdlcyk/request-absence/__PAGE__",
+    "/!KGFkbWluKQ/!KG90aGVycy1wYWdlcyk/request-absence",
+    "/!KGFkbWluKQ/!KG90aGVycy1wYWdlcyk",
+    "/!KGFkbWluKQ",
+    "/_index",
+    "/_head"
+  ]
+}

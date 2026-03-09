@@ -1,0 +1,389 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/helpdesk/[id]",
+      "regex": "^/helpdesk/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/helpdesk/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/alerts",
+      "regex": "^/alerts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alerts(?:/)?$"
+    },
+    {
+      "page": "/announcements",
+      "regex": "^/announcements(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/announcements(?:/)?$"
+    },
+    {
+      "page": "/appreciate",
+      "regex": "^/appreciate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/appreciate(?:/)?$"
+    },
+    {
+      "page": "/approval-workflows",
+      "regex": "^/approval\\-workflows(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/approval\\-workflows(?:/)?$"
+    },
+    {
+      "page": "/asset-documentation",
+      "regex": "^/asset\\-documentation(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/asset\\-documentation(?:/)?$"
+    },
+    {
+      "page": "/asset-exit-clearance",
+      "regex": "^/asset\\-exit\\-clearance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/asset\\-exit\\-clearance(?:/)?$"
+    },
+    {
+      "page": "/asset-issue",
+      "regex": "^/asset\\-issue(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/asset\\-issue(?:/)?$"
+    },
+    {
+      "page": "/attendance",
+      "regex": "^/attendance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/attendance(?:/)?$"
+    },
+    {
+      "page": "/avatars",
+      "regex": "^/avatars(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/avatars(?:/)?$"
+    },
+    {
+      "page": "/badge",
+      "regex": "^/badge(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/badge(?:/)?$"
+    },
+    {
+      "page": "/bar-chart",
+      "regex": "^/bar\\-chart(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/bar\\-chart(?:/)?$"
+    },
+    {
+      "page": "/basic-tables",
+      "regex": "^/basic\\-tables(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/basic\\-tables(?:/)?$"
+    },
+    {
+      "page": "/benefits",
+      "regex": "^/benefits(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/benefits(?:/)?$"
+    },
+    {
+      "page": "/blank",
+      "regex": "^/blank(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blank(?:/)?$"
+    },
+    {
+      "page": "/buttons",
+      "regex": "^/buttons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/buttons(?:/)?$"
+    },
+    {
+      "page": "/calendar",
+      "regex": "^/calendar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/calendar(?:/)?$"
+    },
+    {
+      "page": "/company-news",
+      "regex": "^/company\\-news(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/company\\-news(?:/)?$"
+    },
+    {
+      "page": "/delegations",
+      "regex": "^/delegations(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/delegations(?:/)?$"
+    },
+    {
+      "page": "/employee-directory",
+      "regex": "^/employee\\-directory(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/employee\\-directory(?:/)?$"
+    },
+    {
+      "page": "/employee-hub",
+      "regex": "^/employee\\-hub(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/employee\\-hub(?:/)?$"
+    },
+    {
+      "page": "/error-404",
+      "regex": "^/error\\-404(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/error\\-404(?:/)?$"
+    },
+    {
+      "page": "/exchange-asset",
+      "regex": "^/exchange\\-asset(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/exchange\\-asset(?:/)?$"
+    },
+    {
+      "page": "/faq",
+      "regex": "^/faq(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/faq(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/feedback",
+      "regex": "^/feedback(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/feedback(?:/)?$"
+    },
+    {
+      "page": "/form-elements",
+      "regex": "^/form\\-elements(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/form\\-elements(?:/)?$"
+    },
+    {
+      "page": "/helpdesk",
+      "regex": "^/helpdesk(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/helpdesk(?:/)?$"
+    },
+    {
+      "page": "/holiday-list",
+      "regex": "^/holiday\\-list(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/holiday\\-list(?:/)?$"
+    },
+    {
+      "page": "/hr-policies",
+      "regex": "^/hr\\-policies(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr\\-policies(?:/)?$"
+    },
+    {
+      "page": "/images",
+      "regex": "^/images(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/images(?:/)?$"
+    },
+    {
+      "page": "/it-admin",
+      "regex": "^/it\\-admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/it\\-admin(?:/)?$"
+    },
+    {
+      "page": "/leave-calendar",
+      "regex": "^/leave\\-calendar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/leave\\-calendar(?:/)?$"
+    },
+    {
+      "page": "/line-chart",
+      "regex": "^/line\\-chart(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/line\\-chart(?:/)?$"
+    },
+    {
+      "page": "/manage-absence",
+      "regex": "^/manage\\-absence(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/manage\\-absence(?:/)?$"
+    },
+    {
+      "page": "/modals",
+      "regex": "^/modals(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/modals(?:/)?$"
+    },
+    {
+      "page": "/my-assets",
+      "regex": "^/my\\-assets(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/my\\-assets(?:/)?$"
+    },
+    {
+      "page": "/organizational-chart",
+      "regex": "^/organizational\\-chart(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/organizational\\-chart(?:/)?$"
+    },
+    {
+      "page": "/overtime-extra-hours",
+      "regex": "^/overtime\\-extra\\-hours(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/overtime\\-extra\\-hours(?:/)?$"
+    },
+    {
+      "page": "/payslips",
+      "regex": "^/payslips(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/payslips(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/request-absence",
+      "regex": "^/request\\-absence(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/request\\-absence(?:/)?$"
+    },
+    {
+      "page": "/request-asset",
+      "regex": "^/request\\-asset(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/request\\-asset(?:/)?$"
+    },
+    {
+      "page": "/return-asset",
+      "regex": "^/return\\-asset(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/return\\-asset(?:/)?$"
+    },
+    {
+      "page": "/shift-management",
+      "regex": "^/shift\\-management(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/shift\\-management(?:/)?$"
+    },
+    {
+      "page": "/signin",
+      "regex": "^/signin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/signin(?:/)?$"
+    },
+    {
+      "page": "/signup",
+      "regex": "^/signup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/time-management-queries-support",
+      "regex": "^/time\\-management\\-queries\\-support(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/time\\-management\\-queries\\-support(?:/)?$"
+    },
+    {
+      "page": "/time-off-balance",
+      "regex": "^/time\\-off\\-balance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/time\\-off\\-balance(?:/)?$"
+    },
+    {
+      "page": "/timesheet",
+      "regex": "^/timesheet(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/timesheet(?:/)?$"
+    },
+    {
+      "page": "/travel-expenses",
+      "regex": "^/travel\\-expenses(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/travel\\-expenses(?:/)?$"
+    },
+    {
+      "page": "/videos",
+      "regex": "^/videos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/videos(?:/)?$"
+    },
+    {
+      "page": "/work-from-home",
+      "regex": "^/work\\-from\\-home(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/work\\-from\\-home(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

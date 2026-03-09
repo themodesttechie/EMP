@@ -6,7 +6,7 @@ import {
 import EmployeeDocumentHub from "../employee-hub/page";
 import HrPoliciesPage from "../hr-policies/page";
 import BenefitsPage from "../benefits/page";
-import AnnouncementsPage from "../announcements/page";
+import AnnouncementsPage from "../../(workplace)/announcements/page";
 import PayslipsPage from "../payslips/page";
 import TimesheetPage from "../timesheet/page";
 import LeaveCalendar from "../leave-calendar/page";

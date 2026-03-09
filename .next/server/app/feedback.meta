@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(admin)/layout,_N_T_/(admin)/(workplace)/layout,_N_T_/(admin)/(workplace)/feedback/layout,_N_T_/(admin)/(workplace)/feedback/page,_N_T_/feedback"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGFkbWluKQ/!KHdvcmtwbGFjZSk/feedback/__PAGE__",
+    "/!KGFkbWluKQ/!KHdvcmtwbGFjZSk/feedback",
+    "/!KGFkbWluKQ/!KHdvcmtwbGFjZSk",
+    "/!KGFkbWluKQ",
+    "/_index",
+    "/_head"
+  ]
+}

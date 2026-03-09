@@ -93,6 +93,7 @@ export const navItems: NavItem[] = [
             { name: "Asset Issue", path: "/asset-issue" },
             { name: "Asset Documentation", path: "/asset-documentation" },
             { name: "Exit Clearance", path: "/asset-exit-clearance" },
+            { name: "IT Admin Dashboard", path: "/it-admin" },
         ],
     },
     {

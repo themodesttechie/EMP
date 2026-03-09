@@ -1,42 +1,24 @@
 {
   "app": {
-    "[project]/src/app/(admin)/(others-pages)/attendance/page": [
+    "[project]/src/app/(admin)/(learning-training)/assessments-quizzes/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
-    "[project]/src/app/(admin)/(others-pages)/calendar/page": [
+    "[project]/src/app/(admin)/(learning-training)/course-catalog/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
-    "[project]/src/app/(admin)/(others-pages)/delegations/page": [
+    "[project]/src/app/(admin)/(learning-training)/learning-paths/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
-    "[project]/src/app/(admin)/(others-pages)/holiday-list/page": [
+    "[project]/src/app/(admin)/(learning-training)/mandatory-compliance-trainings/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
-    "[project]/src/app/(admin)/(others-pages)/manage-absence/page": [
+    "[project]/src/app/(admin)/(learning-training)/my-learning-dashboard/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
-    "[project]/src/app/(admin)/(others-pages)/overtime-extra-hours/page": [
+    "[project]/src/app/(admin)/(learning-training)/surveys-feedbacks/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
-    "[project]/src/app/(admin)/(others-pages)/payslips/page": [
-      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
-    ],
-    "[project]/src/app/(admin)/(others-pages)/request-absence/page": [
-      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
-    ],
-    "[project]/src/app/(admin)/(others-pages)/shift-management/page": [
-      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
-    ],
-    "[project]/src/app/(admin)/(others-pages)/time-management-queries-support/page": [
-      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
-    ],
-    "[project]/src/app/(admin)/(others-pages)/time-off-balance/page": [
-      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
-    ],
-    "[project]/src/app/(admin)/(others-pages)/timesheet/page": [
-      "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
-    ],
-    "[project]/src/app/(admin)/(others-pages)/work-from-home/page": [
+    "[project]/src/app/(admin)/(others-pages)/admin/page": [
       "static/media/1b99372b3eaef0c8-s.p.758e15a8.woff2"
     ],
     "[project]/src/app/(admin)/page": [

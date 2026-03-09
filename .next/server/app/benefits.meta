@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(admin)/layout,_N_T_/(admin)/(others-pages)/layout,_N_T_/(admin)/(others-pages)/benefits/layout,_N_T_/(admin)/(others-pages)/benefits/page,_N_T_/benefits"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGFkbWluKQ/!KG90aGVycy1wYWdlcyk/benefits/__PAGE__",
+    "/!KGFkbWluKQ/!KG90aGVycy1wYWdlcyk/benefits",
+    "/!KGFkbWluKQ/!KG90aGVycy1wYWdlcyk",
+    "/!KGFkbWluKQ",
+    "/_index",
+    "/_head"
+  ]
+}

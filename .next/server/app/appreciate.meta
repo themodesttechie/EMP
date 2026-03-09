@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(admin)/layout,_N_T_/(admin)/(workplace)/layout,_N_T_/(admin)/(workplace)/appreciate/layout,_N_T_/(admin)/(workplace)/appreciate/page,_N_T_/appreciate"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGFkbWluKQ/!KHdvcmtwbGFjZSk/appreciate/__PAGE__",
+    "/!KGFkbWluKQ/!KHdvcmtwbGFjZSk/appreciate",
+    "/!KGFkbWluKQ/!KHdvcmtwbGFjZSk",
+    "/!KGFkbWluKQ",
+    "/_index",
+    "/_head"
+  ]
+}
