@@ -87,7 +87,8 @@ export const navItems: NavItem[] = [
         name: "Asset Management",
         subItems: [
             { name: "My Assets", path: "/my-assets" },
-            { name: "Request Asset", path: "/request-asset" },
+            { name: "Service Catalog", path: "/request-asset" },
+            { name: "My Requests", path: "/my-requests" },
             { name: "Return Asset", path: "/return-asset" },
             { name: "Exchange Asset", path: "/exchange-asset" },
             { name: "Asset Issue", path: "/asset-issue" },

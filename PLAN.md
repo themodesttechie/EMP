@@ -40,17 +40,18 @@
 - [ ] RLS policies for tenants/users
 - [ ] Middleware: protect `(admin)/*` routes, redirect unauth → `/signin`
 
-### Sprint 2 — Incident/Ticket core (next)
-- [ ] Schema `002_tickets.sql`: tickets, ticket_comments, ticket_attachments, ticket_categories, sla_policies
+### Sprint 2 — Service catalog + approvals (next; reordered 2026-05-09 per owner)
+- [ ] Schema `002_catalog.sql`: catalog_categories, catalog_items, requests, request_approvals, request_comments
+- [ ] Approval engine (sequential stages, manager-of-requester default)
+- [ ] Server actions: createRequest, listMyRequests, listPendingApprovals, approveRequest, rejectRequest, addRequestComment
+- [ ] Wire `/request-asset`, `/request-absence`, `/approval-workflows`, `/manage-absence` to real data
+
+### Sprint 3 — Incident/Ticket core
+- [ ] Schema `003_tickets.sql`: tickets, ticket_comments, ticket_attachments, ticket_categories, sla_policies
 - [ ] Server actions: createTicket, listTickets, getTicket, addComment, updateStatus, assignTicket
 - [ ] Wire existing `/helpdesk` + `/helpdesk/[id]` to real data
 - [ ] SLA timer (created_at + priority → due_at)
 - [ ] Email notif on ticket assigned / comment added (Resend)
-
-### Sprint 3 — Service catalog + approvals
-- [ ] Schema `003_catalog.sql`: catalog_items, requests, approval_steps
-- [ ] Approval engine (sequential + parallel stages)
-- [ ] Wire `/request-asset`, `/request-absence`, `/approval-workflows`
 
 ### Sprint 4 — CMDB / Asset
 - [ ] Schema `004_assets.sql`: assets, asset_assignments, asset_audit_log
