@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../../src/app/%28full-width-pages%29/layout.tsx"],"sourcesContent":["export default function FullWidthPageLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return <div>{children}</div>;\n}\n"],"names":[],"mappings":"uDAAe,SAAS,EAAoB,UAC1C,CAAQ,CAGT,EACC,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,UAAK,GACf"}
