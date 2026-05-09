@@ -20,7 +20,7 @@
 | HR Service Delivery | `/(others-pages)/*` (25 routes) | Frontend only |
 
 ## Stack decision
-- **Supabase** (Postgres + Auth + RLS) — reuse PayrollPilot pattern
+- **Supabase** (Postgres + Auth + RLS) — its own project, not shared with any other Entyti product
 - **Server Actions** for mutations (no separate API layer)
 - **RLS** multi-tenant from day 1 (tenant_id on every table)
 - **Resend** for notifications (info@entyti.com sender)
@@ -75,7 +75,6 @@
 - Backup before regen of any generated artefact to `F:\`
 
 ## Open questions for user
-- Confirm Supabase project: reuse PayrollPilot Mumbai project or new for ifbash?
-- Hyderabad region preference (per Bashir's 50-staff context) — ap-south-1 (Mumbai) is closest available
-- Resend domain: `payroll.entyti.com` (existing) or new `ifbash.entyti.com`?
-- White-label: keep "IfBash" branding or rebrand to neutral (Entyti-internal product)?
+- Supabase project: create dedicated project for this product (Mumbai/ap-south-1 closest to Hyderabad). Do NOT share with any other Entyti product.
+- Resend sender domain: new subdomain (e.g. `service.entyti.com`) — own DKIM, own bounce stream.
+- White-label: keep "ifBash" default; per-tenant rebrand via `tenants.name` already in schema.
