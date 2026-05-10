@@ -18,6 +18,8 @@ export type AIFlow =
   | "sentiment"
   | "breach_predict"
   | "trend_explain"
+  | "translate"
+  | "kudos_categorize"
   | "other";
 
 export type AIOutcome =

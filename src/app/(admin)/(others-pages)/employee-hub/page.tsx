@@ -1,466 +1,208 @@
-"use client";
-
-import React, { useState, useMemo } from "react";
+import type { Metadata } from "next";
+import Link from "next/link";
 import {
-    ChevronRight,
-    ChevronDown,
-    Folder,
-    FileText,
-    UploadCloud,
-    Share2,
-    Download,
-    Search,
+  Megaphone,
+  Heart,
+  HelpCircle,
+  Ticket,
+  Package,
+  Clock,
+  Users,
+  Send,
 } from "lucide-react";
-import Badge from "@/components/ui/badge/Badge";
-import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import { requireProfile } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
+import { listForUser } from "@/lib/workplace/announcements";
+import { listToUser } from "@/lib/workplace/kudos";
+import { listMyRequests } from "@/lib/catalog/queries";
 
-/* ========================
-   TYPES
-======================== */
-type Access = "Private" | "Shared";
+export const metadata: Metadata = { title: "Employee hub | ifBash" };
 
-interface FileItem {
-    id: string;
-    name: string;
-    size: string;
-    access: Access;
-    folderPath: string;
+async function countMyOpenTickets(profileId: string): Promise<number> {
+  const supabase = await createClient();
+  const { count } = await supabase
+    .from("tickets")
+    .select("*", { count: "exact", head: true })
+    .eq("requester_id", profileId)
+    .not("state", "in", "(resolved,closed,cancelled)");
+  return count ?? 0;
 }
 
-interface FolderPermission {
-    email: string;
-    role: "View" | "Upload" | "Manage";
+async function countMyAssignedAssets(): Promise<number> {
+  // Asset module ships in Sprint 4. Tolerate missing table.
+  try {
+    const supabase = await createClient();
+    const { count, error } = await supabase
+      .from("asset_assignments")
+      .select("*", { count: "exact", head: true })
+      .is("returned_at", null);
+    if (error) return 0;
+    return count ?? 0;
+  } catch {
+    return 0;
+  }
 }
 
-interface FolderItem {
-    id: string;
-    name: string;
-    folders: FolderItem[];
-    files: FileItem[];
-    permissions?: FolderPermission[];
-}
+export default async function EmployeeHubPage() {
+  const profile = await requireProfile();
+  const [pinned, openTickets, openRequests, recentKudos, assignedAssets] = await Promise.all([
+    listForUser(profile),
+    countMyOpenTickets(profile.id),
+    listMyRequests().catch(() => [] as unknown[]),
+    listToUser(profile.id, 5),
+    countMyAssignedAssets(),
+  ]);
 
-/* ========================
-   STATIC DATA
-======================== */
-const initialFolders: FolderItem[] = [
-    {
-        id: "1",
-        name: "Personal",
-        folders: [],
-        files: [
-            { id: "f1", name: "Aadhar.pdf", size: "420 KB", access: "Private", folderPath: "Personal" },
-        ],
-    },
-    {
-        id: "2",
-        name: "HR",
-        folders: [
-            {
-                id: "2-1",
-                name: "Payslips",
-                folders: [],
-                files: [
-                    { id: "f2", name: "Payslip_Jan.pdf", size: "180 KB", access: "Shared", folderPath: "HR / Payslips" },
-                ],
-            },
-        ],
-        files: [],
-    },
-];
+  const pinnedItems = pinned.filter((a) => a.pinned).slice(0, 3);
+  const openRequestsCount = (openRequests as Array<{ status: string }>).filter(
+    (r) => r.status !== "completed" && r.status !== "cancelled" && r.status !== "rejected" && r.status !== "fulfilled",
+  ).length;
 
-/* ========================
-   HELPERS
-======================== */
-const flattenAllFiles = (folders: FolderItem[]): FileItem[] => {
-    let files: FileItem[] = [];
-    const walk = (folder: FolderItem, path: string) => {
-        folder.files.forEach((f) => files.push({ ...f, folderPath: path }));
-        folder.folders.forEach((sub) => walk(sub, `${path} / ${sub.name}`));
-    };
-    folders.forEach((f) => walk(f, f.name));
-    return files;
-};
-
-/* ========================
-   MODALS
-======================== */
-const Modal = ({ title, children, onClose }: { title: string; children: React.ReactNode; onClose: () => void }) => (
-    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center">
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 w-1/3 relative">
-            <button onClick={onClose} className="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-                ✕
-            </button>
-            <h2 className="text-lg font-semibold mb-4">{title}</h2>
-            {children}
+  return (
+    <div className="flex-1 min-h-screen bg-[#F8F9FC] dark:bg-[#09090b] overflow-y-auto">
+      <header className="sticky top-0 z-30 bg-white dark:bg-[#121212] border-b border-slate-200 dark:border-slate-800 px-6 py-6 shadow-sm">
+        <div className="max-w-[1400px] mx-auto">
+          <h1 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
+            Welcome, {profile.full_name ?? profile.email}
+          </h1>
+          <p className="text-sm text-slate-500">Your snapshot across the workplace.</p>
         </div>
-    </div>
-);
-
-/* ========================
-   DRAG & DROP UPLOAD
-======================== */
-const DropZone = ({ onUpload, onClose }: { onUpload: (files: File[]) => void; onClose: () => void }) => (
-    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center">
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-8 w-1/3 relative flex flex-col items-center">
-            <button onClick={onClose} className="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-                ✕
-            </button>
-            <UploadCloud size={48} className="text-gray-400 mb-4" />
-            <p className="text-center text-gray-600 mb-4">Drag & drop files here or click to upload</p>
-            <input
-                type="file"
-                multiple
-                className="absolute inset-0 opacity-0 cursor-pointer"
-                onChange={(e) => e.target.files && onUpload(Array.from(e.target.files))}
+      </header>
+      <main className="max-w-[1400px] mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <section className="lg:col-span-2 space-y-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <StatCard
+              icon={<Ticket size={18} />}
+              label="Open tickets"
+              value={openTickets}
+              href="/helpdesk"
             />
-        </div>
+            <StatCard
+              icon={<Clock size={18} />}
+              label="Open requests"
+              value={openRequestsCount}
+              href="/my-requests"
+            />
+            <StatCard
+              icon={<Package size={18} />}
+              label="Assigned assets"
+              value={assignedAssets}
+              href="/my-assets"
+            />
+            <StatCard
+              icon={<Heart size={18} />}
+              label="Kudos received"
+              value={recentKudos.length}
+              href="/appreciate/feed"
+            />
+          </div>
+
+          <div className="bg-white dark:bg-[#121212] rounded-3xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Megaphone size={20} /> Pinned announcements
+              </h2>
+              <Link href="/announcements" className="text-xs text-brand-600 font-bold uppercase tracking-widest">
+                View all
+              </Link>
+            </div>
+            {pinnedItems.length === 0 ? (
+              <p className="text-sm text-slate-500">No pinned announcements right now.</p>
+            ) : (
+              <div className="space-y-3">
+                {pinnedItems.map((a) => (
+                  <Link
+                    key={a.id}
+                    href="/announcements"
+                    className="block p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 hover:border-brand-300 transition"
+                  >
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">{a.title}</p>
+                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{a.body_for_user}</p>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="bg-white dark:bg-[#121212] rounded-3xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Heart size={20} /> Recent kudos
+              </h2>
+              <Link href="/appreciate" className="text-xs text-brand-600 font-bold uppercase tracking-widest">
+                Give kudos
+              </Link>
+            </div>
+            {recentKudos.length === 0 ? (
+              <p className="text-sm text-slate-500">No kudos yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {recentKudos.map((k) => (
+                  <div
+                    key={k.id}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800"
+                  >
+                    <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                      From {k.from_user?.full_name ?? k.from_user?.email}
+                    </p>
+                    <p className="text-xs text-slate-500 mt-1">{k.message}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        <aside className="space-y-6">
+          <div className="bg-white dark:bg-[#121212] rounded-3xl border border-slate-200 dark:border-slate-800 p-6">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Quick links</h3>
+            <div className="space-y-2">
+              <QuickLink href="/helpdesk" icon={<Ticket size={16} />} label="Raise a ticket" />
+              <QuickLink href="/request-asset" icon={<Package size={16} />} label="Request a service" />
+              <QuickLink href="/employee-directory" icon={<Users size={16} />} label="Employee directory" />
+              <QuickLink href="/faq" icon={<HelpCircle size={16} />} label="Frequently asked" />
+              <QuickLink href="/feedback" icon={<Send size={16} />} label="Anonymous feedback" />
+            </div>
+          </div>
+        </aside>
+      </main>
     </div>
-);
+  );
+}
 
-/* ========================
-   FOLDER NODE
-======================== */
-const FolderNode = ({
-    folder,
-    selectedId,
-    onSelect,
-    onDownloadFolder,
-    onContextMenu,
+function StatCard({
+  icon,
+  label,
+  value,
+  href,
 }: {
-    folder: FolderItem;
-    selectedId: string | null;
-    onSelect: (folder: FolderItem) => void;
-    onDownloadFolder: (folder: FolderItem) => void;
-    onContextMenu: (e: React.MouseEvent, type: "folder" | "file", item: any) => void;
-}) => {
-    const [open, setOpen] = useState(false);
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="bg-white dark:bg-[#121212] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 hover:border-brand-400 transition group"
+    >
+      <div className="flex items-center justify-between mb-2 text-slate-400">
+        {icon}
+      </div>
+      <p className="text-2xl font-black text-slate-900 dark:text-white">{value}</p>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">{label}</p>
+    </Link>
+  );
+}
 
-    return (
-        <div className="ml-2">
-            <div
-                className={`flex justify-between items-center px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 ${selectedId === folder.id ? "bg-gray-200 dark:bg-gray-700" : ""
-                    }`}
-                onContextMenu={(e) => onContextMenu(e, "folder", folder)}
-            >
-                <div className="flex items-center gap-2" onClick={() => setOpen(!open)}>
-                    {folder.folders.length || folder.files.length ? (
-                        open ? <ChevronDown size={16} /> : <ChevronRight size={16} />
-                    ) : (
-                        <span className="w-4" />
-                    )}
-                    <Folder size={18} className="text-brand-500" />
-                    <span onClick={() => onSelect(folder)}>{folder.name}</span>
-                </div>
-                <div className="flex gap-2">
-                    <button onClick={() => onDownloadFolder(folder)}>
-                        <Download size={16} className="text-gray-400 hover:text-gray-600" />
-                    </button>
-                    <Share2 size={16} className="text-gray-400" />
-                </div>
-            </div>
-
-            {open &&
-                folder.folders.map((sub) => (
-                    <FolderNode
-                        key={sub.id}
-                        folder={sub}
-                        selectedId={selectedId}
-                        onSelect={onSelect}
-                        onDownloadFolder={onDownloadFolder}
-                        onContextMenu={onContextMenu}
-                    />
-                ))}
-        </div>
-    );
-};
-
-/* ========================
-   FILE GRID WITH PAGINATION
-======================== */
-const FileGrid = ({
-    files,
-    onDownloadFile,
-    onContextMenu,
-    currentPage,
-    setCurrentPage,
-    pageSize,
-}: {
-    files: FileItem[];
-    onDownloadFile: (file: FileItem) => void;
-    onContextMenu: (e: React.MouseEvent, type: "file" | "folder", item: any) => void;
-    currentPage: number;
-    setCurrentPage: (p: number) => void;
-    pageSize: number;
-}) => {
-    const totalPages = Math.ceil(files.length / pageSize);
-    const visibleFiles = files.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
-    return (
-        <div>
-            <div className="grid grid-cols-4 gap-4 mt-4">
-                {visibleFiles.map((file) => (
-                    <div
-                        key={file.id}
-                        className="p-3 border rounded-lg hover:shadow-md flex flex-col items-start gap-2"
-                        onContextMenu={(e) => onContextMenu(e, "file", file)}
-                    >
-                        <div className="w-full flex justify-between">
-                            <FileText size={24} />
-                            <button onClick={() => onDownloadFile(file)}>
-                                <Download size={16} className="text-gray-400 hover:text-gray-600" />
-                            </button>
-                        </div>
-                        <span className="font-medium">{file.name}</span>
-                        <span className="text-xs text-gray-500">{file.folderPath}</span>
-                        <Badge size="sm" color={file.access === "Shared" ? "primary" : "dark"}>
-                            {file.access}
-                        </Badge>
-                    </div>
-                ))}
-            </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="flex justify-center mt-4 gap-2">
-                    <button
-                        onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
-                        disabled={currentPage === 1}
-                        className="px-3 py-1 border rounded"
-                    >
-                        Prev
-                    </button>
-                    {[...Array(totalPages)].map((_, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => setCurrentPage(idx + 1)}
-                            className={`px-3 py-1 border rounded ${currentPage === idx + 1 ? "bg-brand-500 text-white" : ""}`}
-                        >
-                            {idx + 1}
-                        </button>
-                    ))}
-                    <button
-                        onClick={() => setCurrentPage(Math.min(currentPage + 1, totalPages))}
-                        disabled={currentPage === totalPages}
-                        className="px-3 py-1 border rounded"
-                    >
-                        Next
-                    </button>
-                </div>
-            )}
-        </div>
-    );
-};
-
-/* ========================
-   MAIN PAGE
-======================== */
-export default function EmployeeDocumentHub() {
-    const [folders, setFolders] = useState(initialFolders);
-    const [selectedFolder, setSelectedFolder] = useState<FolderItem | null>(null);
-    const [showUpload, setShowUpload] = useState(false);
-    const [search, setSearch] = useState("");
-    const [contextMenu, setContextMenu] = useState<{
-        x: number;
-        y: number;
-        type: "file" | "folder";
-        item: any;
-    } | null>(null);
-    const [showRename, setShowRename] = useState(false);
-    const [renameValue, setRenameValue] = useState("");
-    const [showShare, setShowShare] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 8;
-
-    const allFiles = useMemo(() => {
-        let data = selectedFolder ? flattenAllFiles([selectedFolder]) : flattenAllFiles(folders);
-        if (search) data = data.filter((f) => f.name.toLowerCase().includes(search.toLowerCase()));
-        return data;
-    }, [folders, selectedFolder, search]);
-
-    const handleUploadFiles = (files: File[]) => {
-        if (!selectedFolder) return;
-        const newFiles: FileItem[] = files.map((f, idx) => ({
-            id: Date.now().toString() + idx,
-            name: f.name,
-            size: `${(f.size / 1024).toFixed(2)} KB`,
-            access: "Private",
-            folderPath: selectedFolder.name,
-        }));
-        selectedFolder.files.push(...newFiles);
-        setFolders([...folders]);
-        setShowUpload(false);
-    };
-
-    const handleDownloadFile = (file: FileItem) => alert(`Download file: ${file.name}`);
-    const handleDownloadFolder = (folder: FolderItem) => alert(`Download folder: ${folder.name}`);
-
-    const handleContextMenu = (e: React.MouseEvent, type: "file" | "folder", item: any) => {
-        e.preventDefault();
-        setContextMenu({ x: e.clientX, y: e.clientY, type, item });
-    };
-
-    const handleRename = () => {
-        if (contextMenu) {
-            contextMenu.item.name = renameValue;
-            setFolders([...folders]);
-            setShowRename(false);
-            setContextMenu(null);
-        }
-    };
-
-    const handleShare = () => {
-        setShowShare(true);
-        setContextMenu(null);
-    };
-
-    return (
-        <div className="p-6 space-y-6 relative">
-            <PageBreadcrumb pageTitle="Employee Document Hub" />
-
-            {/* Top bar */}
-            <div className="flex justify-between items-center mb-4">
-                <div>
-                    <p className="text-sm text-gray-500"></p>
-                </div>
-                <button
-                    className="flex items-center gap-2 bg-brand-500 text-white px-4 py-2 rounded-lg hover:bg-brand-600"
-                    onClick={() => setShowUpload(true)}
-                >
-                    <UploadCloud size={16} /> Upload
-                </button>
-            </div>
-
-            {showUpload && <DropZone onUpload={handleUploadFiles} onClose={() => setShowUpload(false)} />}
-
-            {/* Search */}
-            <div className="flex items-center mb-4 gap-4">
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-2.5 text-gray-400" size={16} />
-                    <input
-                        placeholder="Search documents..."
-                        className="pl-9 w-full border rounded-lg px-3 py-2"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                </div>
-            </div>
-
-            <div className="grid grid-cols-12 gap-6">
-                {/* Folder Sidebar */}
-                <div className="col-span-3 border rounded-xl p-4 h-[600px] overflow-auto bg-gray-50 dark:bg-gray-800">
-                    <h3 className="font-medium mb-3">Folders</h3>
-                    <div
-                        className={`flex items-center gap-2 px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 ${!selectedFolder ? "bg-gray-200 dark:bg-gray-700" : ""
-                            }`}
-                        onClick={() => setSelectedFolder(null)}
-                    >
-                        <Folder size={18} className="text-brand-500" />
-                        <span>All Documents</span>
-                    </div>
-                    {folders.map((f) => (
-                        <FolderNode
-                            key={f.id}
-                            folder={f}
-                            selectedId={selectedFolder?.id || null}
-                            onSelect={setSelectedFolder}
-                            onDownloadFolder={handleDownloadFolder}
-                            onContextMenu={handleContextMenu}
-                        />
-                    ))}
-                </div>
-
-                {/* File area */}
-                <div className="col-span-9">
-                    <FileGrid
-                        files={allFiles}
-                        onDownloadFile={handleDownloadFile}
-                        onContextMenu={handleContextMenu}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        pageSize={pageSize}
-                    />
-                </div>
-            </div>
-
-            {/* Context Menu */}
-            {contextMenu && (
-                <ul
-                    className="absolute bg-white border shadow-lg rounded-md z-50"
-                    style={{ top: contextMenu.y, left: contextMenu.x }}
-                >
-                    <li
-                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleDownloadFile(contextMenu.item)}
-                    >
-                        <Download size={14} className="inline mr-2" />
-                        Download
-                    </li>
-                    <li
-                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={handleShare}
-                    >
-                        <Share2 size={14} className="inline mr-2" />
-                        Share
-                    </li>
-                    <li
-                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={() => {
-                            setRenameValue(contextMenu.item.name);
-                            setShowRename(true);
-                            setContextMenu(null);
-                        }}
-                    >
-                        Rename
-                    </li>
-                </ul>
-            )}
-
-            {/* Rename Modal */}
-            {showRename && (
-                <Modal title="Rename" onClose={() => setShowRename(false)}>
-                    <input
-                        type="text"
-                        value={renameValue}
-                        onChange={(e) => setRenameValue(e.target.value)}
-                        className="w-full border rounded-lg px-3 py-2 mb-4"
-                    />
-                    <div className="flex justify-end gap-2">
-                        <button className="border px-4 py-2 rounded-lg" onClick={() => setShowRename(false)}>
-                            Cancel
-                        </button>
-                        <button className="bg-brand-500 text-white px-4 py-2 rounded-lg" onClick={handleRename}>
-                            Save
-                        </button>
-                    </div>
-                </Modal>
-            )}
-
-            {/* Share Modal */}
-            {showShare && (
-                <Modal title="Share" onClose={() => setShowShare(false)}>
-                    <p className="mb-4">Enter email to share:</p>
-                    <input
-                        type="text"
-                        placeholder="example@company.com"
-                        className="w-full border rounded-lg px-3 py-2 mb-4"
-                    />
-                    <div className="flex justify-end gap-2">
-                        <button className="border px-4 py-2 rounded-lg" onClick={() => setShowShare(false)}>
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-brand-500 text-white px-4 py-2 rounded-lg"
-                            onClick={() => {
-                                alert("Shared successfully!");
-                                setShowShare(false);
-                            }}
-                        >
-                            Share
-                        </button>
-                    </div>
-                </Modal>
-            )}
-        </div>
-    );
+function QuickLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 text-sm text-slate-700 dark:text-slate-300"
+    >
+      <span className="text-slate-400">{icon}</span>
+      <span className="font-medium">{label}</span>
+    </Link>
+  );
 }
