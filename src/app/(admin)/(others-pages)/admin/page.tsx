@@ -1,69 +1,50 @@
-"use client";
-import React, { useState } from "react";
-import {
-    Home, FileText, ClipboardList, Bell, PieChart
-} from "lucide-react";
-import EmployeeDocumentHub from "../employee-hub/page";
-import HrPoliciesPage from "../hr-policies/page";
-import AnnouncementsPage from "../../(workplace)/announcements/page";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Home, FileText, ClipboardList, Bell, PieChart, ChevronRight } from "lucide-react";
+import { requireProfile } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-const modules = [
-    { name: "Dashboard", icon: Home },
-    { name: "Document Hub", icon: FileText },
-    { name: "HR Policies", icon: ClipboardList },
-    { name: "Announcements", icon: Bell },
-    { name: "Helpdesk", icon: PieChart },
+export const metadata: Metadata = { title: "Admin | ifBash" };
+
+const MODULES = [
+  { name: "Dashboard", icon: Home, href: "/" },
+  { name: "Document Hub", icon: FileText, href: "/employee-hub" },
+  { name: "HR Policies", icon: ClipboardList, href: "/hr-policies" },
+  { name: "Announcements", icon: Bell, href: "/announcements" },
+  { name: "Helpdesk", icon: PieChart, href: "/helpdesk" },
 ];
 
-export default function AdminDashboard() {
-    const [activeModule, setActiveModule] = useState("Dashboard");
-
-    const renderModule = () => {
-        switch (activeModule) {
-            case "Document Hub":
-                return <EmployeeDocumentHub />;
-            case "HR Policies":
-                return <HrPoliciesPage />;
-            case "Announcements":
-                return <AnnouncementsPage />;
-            default:
-                return (
-                    <div className="text-gray-600 dark:text-gray-300 p-6">
-                        <h2 className="text-2xl font-bold mb-2">Welcome to Admin Dashboard</h2>
-                        <p>Select a module from the sidebar to manage workplace resources.</p>
-                    </div>
-                );
-        }
-    };
-
-    return (
-        <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-            <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
-                <div className="p-6 text-xl font-bold text-gray-900 dark:text-white">Admin Panel</div>
-                <nav className="flex-1 px-2 space-y-1">
-                    {modules.map((module) => {
-                        const Icon = module.icon;
-                        const isActive = activeModule === module.name;
-                        return (
-                            <button
-                                key={module.name}
-                                onClick={() => setActiveModule(module.name)}
-                                className={`flex items-center w-full px-4 py-2 rounded-lg text-left transition ${isActive
-                                        ? "bg-blue-600 text-white"
-                                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                                    }`}
-                            >
-                                <Icon size={18} className="mr-3" />
-                                {module.name}
-                            </button>
-                        );
-                    })}
-                </nav>
-            </div>
-
-            <div className="flex-1 overflow-auto">
-                <div className="p-6">{renderModule()}</div>
-            </div>
+export default async function AdminDashboard() {
+  const profile = await requireProfile();
+  if (!["admin", "owner"].includes(profile.role)) {
+    redirect("/");
+  }
+  return (
+    <div className="flex-1 min-h-screen bg-[#F8F9FC] dark:bg-[#09090b] p-8">
+      <div className="max-w-[1100px] mx-auto">
+        <h1 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Admin panel</h1>
+        <p className="text-sm text-slate-500 mb-8">Manage workplace surfaces and tenant settings.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {MODULES.map((m) => {
+            const Icon = m.icon;
+            return (
+              <Link
+                key={m.name}
+                href={m.href}
+                className="bg-white dark:bg-[#121212] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 hover:border-brand-400 transition group"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-brand-50 dark:bg-brand-500/10 text-brand-600 rounded-xl">
+                    <Icon size={20} />
+                  </div>
+                  <ChevronRight className="text-slate-300 group-hover:text-brand-500 transition" size={18} />
+                </div>
+                <p className="text-base font-bold text-slate-900 dark:text-white">{m.name}</p>
+              </Link>
+            );
+          })}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
