@@ -11,7 +11,14 @@ type Props = {
   categories: TicketCategory[];
 };
 
-type DeflectionMatch = { id: string; title: string; snippet: string; source: string };
+type DeflectionMatch = {
+  id: string;
+  title: string;
+  snippet: string;
+  source: string;
+  slug?: string;
+  similarity?: number;
+};
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -102,19 +109,46 @@ export default function NewTicketModal({ open, onClose, categories }: Props) {
           {matches.length > 0 && (
             <div className="rounded-lg border border-blue-200 bg-blue-50 dark:bg-blue-500/5 dark:border-blue-500/20 p-3 space-y-2">
               <p className="text-xs font-semibold uppercase tracking-wide text-blue-700 dark:text-blue-400">
-                Before you submit — these may help
+                Before you submit, these may help
               </p>
-              {matches.map((m) => (
-                <div
-                  key={m.id}
-                  className="rounded-md bg-white dark:bg-[#0f0f10] border border-blue-100 dark:border-blue-500/10 p-2 text-sm"
-                >
-                  <p className="font-medium text-slate-800 dark:text-slate-100">{m.title}</p>
-                  {m.snippet ? (
-                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{m.snippet}</p>
-                  ) : null}
-                </div>
-              ))}
+              {matches.map((m) => {
+                const href = m.slug ? `/kb/${m.slug}` : null;
+                const onClick = () => {
+                  if (!m.id) return;
+                  fetch("/api/kb/view", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ article_id: m.id, source: "ticket_form" }),
+                  }).catch(() => undefined);
+                };
+                const inner = (
+                  <>
+                    <p className="font-medium text-slate-800 dark:text-slate-100">{m.title}</p>
+                    {m.snippet ? (
+                      <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{m.snippet}</p>
+                    ) : null}
+                  </>
+                );
+                return href ? (
+                  <a
+                    key={m.id}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={onClick}
+                    className="block rounded-md bg-white dark:bg-[#0f0f10] border border-blue-100 dark:border-blue-500/10 p-2 text-sm hover:border-blue-300"
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div
+                    key={m.id}
+                    className="rounded-md bg-white dark:bg-[#0f0f10] border border-blue-100 dark:border-blue-500/10 p-2 text-sm"
+                  >
+                    {inner}
+                  </div>
+                );
+              })}
             </div>
           )}
 
