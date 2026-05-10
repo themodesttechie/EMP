@@ -3238,7 +3238,7 @@ create table if not exists public.announcements (
   updated_at      timestamptz not null default now()
 );
 create index if not exists idx_announcements_tenant on public.announcements(tenant_id, published_at desc);
-create index if not exists idx_announcements_active on public.announcements(tenant_id, pinned desc, published_at desc) where published_at is not null and (expires_at is null or expires_at > now());
+create index if not exists idx_announcements_active on public.announcements(tenant_id, pinned desc, published_at desc) where published_at is not null;
 
 drop trigger if exists trg_announcements_updated_at on public.announcements;
 create trigger trg_announcements_updated_at
