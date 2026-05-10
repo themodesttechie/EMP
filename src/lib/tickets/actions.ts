@@ -448,6 +448,11 @@ export async function updateTicketStateAction(
     });
   }
 
+  if (toState === "resolved" && b.state !== "resolved") {
+    const { triggerOnTicketResolved } = await import("@/lib/surveys/triggers");
+    await triggerOnTicketResolved(ticketId).catch(() => {});
+  }
+
   revalidatePath(`/helpdesk/${b.number}`);
   revalidatePath("/helpdesk");
   return { ok: true };

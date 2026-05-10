@@ -1403,3 +1403,2066 @@ begin
     (v_tenant, null, 'P4', 480,  4320, v_bh)
   on conflict (tenant_id, category_id, priority) do nothing;
 end $$;
+-- ifBash Sprint 4 — CMDB / asset management
+-- ServiceNow-equivalent: cmdb_ci + cmdb_rel_ci + asset assignments + audit trail.
+-- Per-tenant `CI-NNNNNN` numbering mirrors INC- pattern from 007_tickets.sql.
+
+-- ============================================================================
+-- 1. Enums
+-- ============================================================================
+do $$ begin
+  create type public.ci_status as enum (
+    'planned','in_stock','assigned','in_repair','retired','lost'
+  );
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.asset_condition as enum ('new','good','fair','damaged');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.ci_relationship_type as enum (
+    'depends_on','runs_on','connects_to','contains','used_by'
+  );
+exception when duplicate_object then null; end $$;
+
+-- ============================================================================
+-- 2. ci_classes — taxonomy of configuration item types
+-- ============================================================================
+create table if not exists public.ci_classes (
+  id                   uuid primary key default gen_random_uuid(),
+  tenant_id            uuid not null references public.tenants(id) on delete cascade,
+  parent_id            uuid references public.ci_classes(id) on delete set null,
+  slug                 text not null,
+  name                 text not null,
+  description          text,
+  -- JSON schema describing per-class attribute fields, e.g.
+  -- { "type":"object","properties":{"cpu":{"type":"string"},"ram_gb":{"type":"integer"}} }
+  attributes_schema    jsonb not null default '{}'::jsonb,
+  is_active            boolean not null default true,
+  created_at           timestamptz not null default now(),
+  updated_at           timestamptz not null default now(),
+  unique (tenant_id, slug)
+);
+create index if not exists idx_ci_classes_tenant on public.ci_classes(tenant_id);
+create index if not exists idx_ci_classes_parent on public.ci_classes(parent_id);
+
+drop trigger if exists trg_ci_classes_updated_at on public.ci_classes;
+create trigger trg_ci_classes_updated_at
+  before update on public.ci_classes
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 3. cis — configuration items (the actual asset records)
+-- ============================================================================
+create table if not exists public.cis (
+  id                   uuid primary key default gen_random_uuid(),
+  tenant_id            uuid not null references public.tenants(id) on delete cascade,
+  number               text not null,
+  class_id             uuid references public.ci_classes(id) on delete set null,
+  name                 text not null,
+  serial               text,
+  asset_tag            text,
+  status               public.ci_status not null default 'in_stock',
+  location             text,
+  attributes           jsonb not null default '{}'::jsonb,
+  purchased_at         date,
+  warranty_until       date,
+  cost_centre          text,
+  owner_user_id        uuid references public.profiles(id) on delete set null,
+  -- For inbound webhook ref (vendor confirmation emails, etc.)
+  email_message_id     text,
+  notes                text,
+  created_at           timestamptz not null default now(),
+  updated_at           timestamptz not null default now(),
+  unique (tenant_id, number),
+  unique (tenant_id, asset_tag)
+);
+create index if not exists idx_cis_tenant on public.cis(tenant_id);
+create index if not exists idx_cis_class on public.cis(class_id);
+create index if not exists idx_cis_owner on public.cis(owner_user_id) where owner_user_id is not null;
+create index if not exists idx_cis_status on public.cis(tenant_id, status);
+create index if not exists idx_cis_serial on public.cis(tenant_id, serial) where serial is not null;
+create index if not exists idx_cis_warranty on public.cis(tenant_id, warranty_until) where warranty_until is not null;
+
+drop trigger if exists trg_cis_updated_at on public.cis;
+create trigger trg_cis_updated_at
+  before update on public.cis
+  for each row execute function public.set_updated_at();
+
+-- Per-tenant CI number sequence (mirrors allocate_ticket_number)
+create table if not exists public.ci_number_seq (
+  tenant_id  uuid primary key references public.tenants(id) on delete cascade,
+  next_value bigint not null default 1
+);
+
+create or replace function public.allocate_ci_number(p_tenant uuid)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_next bigint;
+begin
+  insert into public.ci_number_seq (tenant_id, next_value)
+  values (p_tenant, 1)
+  on conflict (tenant_id) do nothing;
+
+  update public.ci_number_seq
+     set next_value = next_value + 1
+   where tenant_id = p_tenant
+   returning next_value - 1 into v_next;
+
+  return 'CI-' || lpad(v_next::text, 6, '0');
+end;
+$$;
+
+revoke all on function public.allocate_ci_number(uuid) from public;
+grant execute on function public.allocate_ci_number(uuid) to authenticated, service_role;
+
+-- ============================================================================
+-- 4. ci_relationships — graph between CIs (server runs_on host etc.)
+-- ============================================================================
+create table if not exists public.ci_relationships (
+  id            uuid primary key default gen_random_uuid(),
+  tenant_id     uuid not null references public.tenants(id) on delete cascade,
+  from_ci       uuid not null references public.cis(id) on delete cascade,
+  to_ci         uuid not null references public.cis(id) on delete cascade,
+  type          public.ci_relationship_type not null,
+  inverse_type  public.ci_relationship_type,
+  notes         text,
+  created_at    timestamptz not null default now(),
+  unique (tenant_id, from_ci, to_ci, type),
+  check (from_ci <> to_ci)
+);
+create index if not exists idx_ci_rel_tenant on public.ci_relationships(tenant_id);
+create index if not exists idx_ci_rel_from on public.ci_relationships(from_ci);
+create index if not exists idx_ci_rel_to on public.ci_relationships(to_ci);
+
+-- ============================================================================
+-- 5. asset_assignments — checkout/return history per CI per user
+-- ============================================================================
+create table if not exists public.asset_assignments (
+  id              uuid primary key default gen_random_uuid(),
+  tenant_id       uuid not null references public.tenants(id) on delete cascade,
+  ci_id           uuid not null references public.cis(id) on delete cascade,
+  user_id         uuid not null references public.profiles(id) on delete restrict,
+  assigned_by     uuid references public.profiles(id) on delete set null,
+  assigned_at     timestamptz not null default now(),
+  returned_at     timestamptz,
+  returned_to     uuid references public.profiles(id) on delete set null,
+  condition       public.asset_condition not null default 'good',
+  return_condition public.asset_condition,
+  checkout_notes  text,
+  return_notes    text,
+  created_at      timestamptz not null default now()
+);
+create index if not exists idx_asset_assign_tenant on public.asset_assignments(tenant_id);
+create index if not exists idx_asset_assign_ci on public.asset_assignments(ci_id, assigned_at desc);
+create index if not exists idx_asset_assign_user on public.asset_assignments(user_id, assigned_at desc);
+create index if not exists idx_asset_assign_open on public.asset_assignments(ci_id) where returned_at is null;
+
+-- ============================================================================
+-- 6. asset_audit_log — every CI mutation event recorded here in addition to
+--    the global audit_log (this is asset-specific quick-lookup)
+-- ============================================================================
+create table if not exists public.asset_audit_log (
+  id            uuid primary key default gen_random_uuid(),
+  tenant_id     uuid not null references public.tenants(id) on delete cascade,
+  ci_id         uuid not null references public.cis(id) on delete cascade,
+  event         text not null,
+  by_user       uuid references public.profiles(id) on delete set null,
+  payload       jsonb,
+  at            timestamptz not null default now()
+);
+create index if not exists idx_asset_audit_ci on public.asset_audit_log(ci_id, at desc);
+create index if not exists idx_asset_audit_tenant on public.asset_audit_log(tenant_id, at desc);
+
+-- ============================================================================
+-- 7. RLS — ci_classes (read all in tenant; write admin/owner/agent)
+-- ============================================================================
+alter table public.ci_classes enable row level security;
+
+drop policy if exists ci_classes_select on public.ci_classes;
+create policy ci_classes_select on public.ci_classes
+  for select using (tenant_id = public.current_user_tenant());
+
+drop policy if exists ci_classes_admin_write on public.ci_classes;
+create policy ci_classes_admin_write on public.ci_classes
+  for all
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner())
+  with check (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 8. RLS — cis
+--    Agents/admin/owner read-write all in tenant.
+--    Employees: read-only on CIs they own.
+-- ============================================================================
+create or replace function public.can_manage_assets()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select role in ('agent','manager','admin','owner') from public.profiles where id = auth.uid()
+$$;
+
+alter table public.cis enable row level security;
+
+drop policy if exists cis_select_visibility on public.cis;
+create policy cis_select_visibility on public.cis
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      owner_user_id = auth.uid()
+      or public.can_manage_assets()
+    )
+  );
+
+drop policy if exists cis_insert_manage on public.cis;
+create policy cis_insert_manage on public.cis
+  for insert
+  with check (
+    tenant_id = public.current_user_tenant() and public.can_manage_assets()
+  );
+
+drop policy if exists cis_update_manage on public.cis;
+create policy cis_update_manage on public.cis
+  for update
+  using (tenant_id = public.current_user_tenant() and public.can_manage_assets())
+  with check (tenant_id = public.current_user_tenant() and public.can_manage_assets());
+
+drop policy if exists cis_delete_manage on public.cis;
+create policy cis_delete_manage on public.cis
+  for delete
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 9. RLS — ci_relationships (piggyback on cis)
+-- ============================================================================
+alter table public.ci_relationships enable row level security;
+
+drop policy if exists ci_rel_select on public.ci_relationships;
+create policy ci_rel_select on public.ci_relationships
+  for select
+  using (tenant_id = public.current_user_tenant() and public.can_manage_assets());
+
+drop policy if exists ci_rel_write on public.ci_relationships;
+create policy ci_rel_write on public.ci_relationships
+  for all
+  using (tenant_id = public.current_user_tenant() and public.can_manage_assets())
+  with check (tenant_id = public.current_user_tenant() and public.can_manage_assets());
+
+-- ============================================================================
+-- 10. RLS — asset_assignments
+--     Employees see own rows. Agents/admin/owner see all in tenant.
+-- ============================================================================
+alter table public.asset_assignments enable row level security;
+
+drop policy if exists asset_assign_select on public.asset_assignments;
+create policy asset_assign_select on public.asset_assignments
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and (user_id = auth.uid() or public.can_manage_assets())
+  );
+
+drop policy if exists asset_assign_write on public.asset_assignments;
+create policy asset_assign_write on public.asset_assignments
+  for all
+  using (tenant_id = public.current_user_tenant() and public.can_manage_assets())
+  with check (tenant_id = public.current_user_tenant() and public.can_manage_assets());
+
+-- ============================================================================
+-- 11. RLS — asset_audit_log (read for managers/admins/owners; write service role)
+-- ============================================================================
+alter table public.asset_audit_log enable row level security;
+
+drop policy if exists asset_audit_select on public.asset_audit_log;
+create policy asset_audit_select on public.asset_audit_log
+  for select
+  using (tenant_id = public.current_user_tenant() and public.can_manage_assets());
+
+-- ============================================================================
+-- 12. Seed — sample ci_classes for ifbash tenant
+-- ============================================================================
+do $$
+declare
+  v_tenant uuid;
+begin
+  select id into v_tenant from public.tenants where slug = 'ifbash';
+  if v_tenant is null then return; end if;
+
+  insert into public.ci_classes (tenant_id, slug, name, description, attributes_schema)
+  values
+    (v_tenant, 'laptop',  'Laptop',  'Portable workstation issued to staff',
+      jsonb_build_object(
+        'type','object',
+        'properties', jsonb_build_object(
+          'cpu',    jsonb_build_object('type','string'),
+          'ram_gb', jsonb_build_object('type','integer'),
+          'os',     jsonb_build_object('type','string')
+        )
+      )
+    ),
+    (v_tenant, 'desktop', 'Desktop', 'Stationary workstation',
+      jsonb_build_object('type','object','properties', jsonb_build_object(
+        'cpu',jsonb_build_object('type','string'),
+        'ram_gb',jsonb_build_object('type','integer')
+      ))
+    ),
+    (v_tenant, 'monitor', 'Monitor', 'External display',
+      jsonb_build_object('type','object','properties', jsonb_build_object(
+        'size_in',jsonb_build_object('type','number'),
+        'panel',jsonb_build_object('type','string')
+      ))
+    ),
+    (v_tenant, 'mobile-phone', 'Mobile phone', 'Issued mobile device',
+      jsonb_build_object('type','object','properties', jsonb_build_object(
+        'imei',jsonb_build_object('type','string'),
+        'plan',jsonb_build_object('type','string')
+      ))
+    ),
+    (v_tenant, 'software-license', 'Software license', 'Per-seat or per-machine licence key',
+      jsonb_build_object('type','object','properties', jsonb_build_object(
+        'product',jsonb_build_object('type','string'),
+        'seats',jsonb_build_object('type','integer'),
+        'expires_at',jsonb_build_object('type','string','format','date')
+      ))
+    ),
+    (v_tenant, 'server',  'Server',  'Physical or virtual server',
+      jsonb_build_object('type','object','properties', jsonb_build_object(
+        'hostname',jsonb_build_object('type','string'),
+        'environment',jsonb_build_object('type','string'),
+        'ip',jsonb_build_object('type','string')
+      ))
+    )
+  on conflict (tenant_id, slug) do nothing;
+end $$;
+-- ifBash Sprint 4 — problem management
+-- ITIL: problems group recurring incidents, capture root cause + workaround,
+-- and may promote to a known error backed by a KB article (Sprint 6).
+
+-- ============================================================================
+-- 1. Enums
+-- ============================================================================
+do $$ begin
+  create type public.problem_state as enum (
+    'new','investigating','known_error','resolved','closed'
+  );
+exception when duplicate_object then null; end $$;
+
+-- ============================================================================
+-- 2. problems
+-- ============================================================================
+create table if not exists public.problems (
+  id                          uuid primary key default gen_random_uuid(),
+  tenant_id                   uuid not null references public.tenants(id) on delete cascade,
+  number                      text not null,
+  title                       text not null,
+  description                 text,
+  root_cause                  text,
+  workaround                  text,
+  state                       public.problem_state not null default 'new',
+  priority                    public.ticket_priority not null default 'P3',
+  related_incidents_count     int not null default 0,
+  ai_proposed_root_cause      jsonb,
+  created_by                  uuid references public.profiles(id) on delete set null,
+  assigned_to                 uuid references public.profiles(id) on delete set null,
+  resolved_at                 timestamptz,
+  closed_at                   timestamptz,
+  created_at                  timestamptz not null default now(),
+  updated_at                  timestamptz not null default now(),
+  unique (tenant_id, number)
+);
+create index if not exists idx_problems_tenant on public.problems(tenant_id);
+create index if not exists idx_problems_state on public.problems(tenant_id, state);
+create index if not exists idx_problems_assigned on public.problems(assigned_to) where assigned_to is not null;
+
+drop trigger if exists trg_problems_updated_at on public.problems;
+create trigger trg_problems_updated_at
+  before update on public.problems
+  for each row execute function public.set_updated_at();
+
+-- Per-tenant PRB- number sequence
+create table if not exists public.problem_number_seq (
+  tenant_id  uuid primary key references public.tenants(id) on delete cascade,
+  next_value bigint not null default 1
+);
+
+create or replace function public.allocate_problem_number(p_tenant uuid)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_next bigint;
+begin
+  insert into public.problem_number_seq (tenant_id, next_value)
+  values (p_tenant, 1)
+  on conflict (tenant_id) do nothing;
+
+  update public.problem_number_seq
+     set next_value = next_value + 1
+   where tenant_id = p_tenant
+   returning next_value - 1 into v_next;
+
+  return 'PRB-' || lpad(v_next::text, 6, '0');
+end;
+$$;
+
+revoke all on function public.allocate_problem_number(uuid) from public;
+grant execute on function public.allocate_problem_number(uuid) to authenticated, service_role;
+
+-- ============================================================================
+-- 3. problem_incident_links — many-to-many between problems and tickets
+-- ============================================================================
+create table if not exists public.problem_incident_links (
+  id            uuid primary key default gen_random_uuid(),
+  tenant_id     uuid not null references public.tenants(id) on delete cascade,
+  problem_id    uuid not null references public.problems(id) on delete cascade,
+  ticket_id     uuid not null references public.tickets(id) on delete cascade,
+  linked_by     uuid references public.profiles(id) on delete set null,
+  linked_at     timestamptz not null default now(),
+  unique (problem_id, ticket_id)
+);
+create index if not exists idx_problem_links_tenant on public.problem_incident_links(tenant_id);
+create index if not exists idx_problem_links_problem on public.problem_incident_links(problem_id);
+create index if not exists idx_problem_links_ticket on public.problem_incident_links(ticket_id);
+
+-- Trigger to keep related_incidents_count in sync
+create or replace function public.sync_problem_incident_count()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_problem uuid;
+begin
+  v_problem := coalesce(new.problem_id, old.problem_id);
+  update public.problems
+     set related_incidents_count = (
+       select count(*) from public.problem_incident_links where problem_id = v_problem
+     )
+   where id = v_problem;
+  return null;
+end;
+$$;
+
+drop trigger if exists trg_problem_link_count_ins on public.problem_incident_links;
+create trigger trg_problem_link_count_ins
+  after insert on public.problem_incident_links
+  for each row execute function public.sync_problem_incident_count();
+
+drop trigger if exists trg_problem_link_count_del on public.problem_incident_links;
+create trigger trg_problem_link_count_del
+  after delete on public.problem_incident_links
+  for each row execute function public.sync_problem_incident_count();
+
+-- ============================================================================
+-- 4. known_errors — promoted problems that have a documented workaround
+--    kb_article_id is nullable until Sprint 6 ships kb_articles.
+-- ============================================================================
+create table if not exists public.known_errors (
+  id                   uuid primary key default gen_random_uuid(),
+  tenant_id            uuid not null references public.tenants(id) on delete cascade,
+  problem_id           uuid not null references public.problems(id) on delete cascade,
+  kb_article_id        uuid,
+  workaround_summary   text,
+  created_by           uuid references public.profiles(id) on delete set null,
+  created_at           timestamptz not null default now(),
+  unique (problem_id)
+);
+create index if not exists idx_known_errors_tenant on public.known_errors(tenant_id);
+
+-- ============================================================================
+-- 5. RLS — problems (managers/agents/admin/owner read-write; employees no access)
+-- ============================================================================
+alter table public.problems enable row level security;
+
+drop policy if exists problems_select on public.problems;
+create policy problems_select on public.problems
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and public.can_view_all_tickets()
+  );
+
+drop policy if exists problems_write on public.problems;
+create policy problems_write on public.problems
+  for all
+  using (tenant_id = public.current_user_tenant() and public.can_view_all_tickets())
+  with check (tenant_id = public.current_user_tenant() and public.can_view_all_tickets());
+
+-- ============================================================================
+-- 6. RLS — problem_incident_links
+-- ============================================================================
+alter table public.problem_incident_links enable row level security;
+
+drop policy if exists problem_links_select on public.problem_incident_links;
+create policy problem_links_select on public.problem_incident_links
+  for select
+  using (tenant_id = public.current_user_tenant() and public.can_view_all_tickets());
+
+drop policy if exists problem_links_write on public.problem_incident_links;
+create policy problem_links_write on public.problem_incident_links
+  for all
+  using (tenant_id = public.current_user_tenant() and public.can_view_all_tickets())
+  with check (tenant_id = public.current_user_tenant() and public.can_view_all_tickets());
+
+-- ============================================================================
+-- 7. RLS — known_errors (managers/agents/admin/owner)
+-- ============================================================================
+alter table public.known_errors enable row level security;
+
+drop policy if exists known_errors_select on public.known_errors;
+create policy known_errors_select on public.known_errors
+  for select
+  using (tenant_id = public.current_user_tenant() and public.can_view_all_tickets());
+
+drop policy if exists known_errors_write on public.known_errors;
+create policy known_errors_write on public.known_errors
+  for all
+  using (tenant_id = public.current_user_tenant() and public.can_view_all_tickets())
+  with check (tenant_id = public.current_user_tenant() and public.can_view_all_tickets());
+-- ifBash Sprint 4 — link tickets to CIs (and to problems via the link table from 010)
+-- Sprint 3's tickets/actions.ts had `linkAsset(id, asset_id)` + `linkProblem(id, problem_id)`
+-- as TODOs. This migration provides the join tables.
+
+-- ============================================================================
+-- 1. ticket_ci_links — many-to-many tickets <-> cis
+-- ============================================================================
+create table if not exists public.ticket_ci_links (
+  id            uuid primary key default gen_random_uuid(),
+  tenant_id     uuid not null references public.tenants(id) on delete cascade,
+  ticket_id     uuid not null references public.tickets(id) on delete cascade,
+  ci_id         uuid not null references public.cis(id) on delete cascade,
+  linked_by     uuid references public.profiles(id) on delete set null,
+  linked_at     timestamptz not null default now(),
+  unique (ticket_id, ci_id)
+);
+create index if not exists idx_ticket_ci_tenant on public.ticket_ci_links(tenant_id);
+create index if not exists idx_ticket_ci_ticket on public.ticket_ci_links(ticket_id);
+create index if not exists idx_ticket_ci_ci on public.ticket_ci_links(ci_id);
+
+-- ============================================================================
+-- 2. RLS — ticket_ci_links
+--    Visibility piggybacks on tickets: requester / assignee / manage-roles.
+-- ============================================================================
+alter table public.ticket_ci_links enable row level security;
+
+drop policy if exists ticket_ci_links_select on public.ticket_ci_links;
+create policy ticket_ci_links_select on public.ticket_ci_links
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and exists (
+      select 1 from public.tickets t
+       where t.id = ticket_ci_links.ticket_id
+         and (
+           t.requester_id = auth.uid()
+           or t.assignee_id = auth.uid()
+           or public.can_view_all_tickets()
+         )
+    )
+  );
+
+drop policy if exists ticket_ci_links_write on public.ticket_ci_links;
+create policy ticket_ci_links_write on public.ticket_ci_links
+  for all
+  using (
+    tenant_id = public.current_user_tenant() and public.can_view_all_tickets()
+  )
+  with check (
+    tenant_id = public.current_user_tenant() and public.can_view_all_tickets()
+  );
+-- ifBash Sprint 5 — change management + CAB
+-- ServiceNow-equivalent: change_request + change_task + change_approver tables.
+-- Per-tenant CHG-NNNNNN allocator. AI-computed risk_score.
+--
+-- NOTE on affected_ci_ids: declared as uuid[] without FK. Sprint 4 introduces the
+-- `cis` table in 009_assets.sql; building these in parallel worktrees means we
+-- cannot guarantee `cis` exists at apply time. We degrade gracefully: array of
+-- uuids, soft-resolved at query time. A follow-up migration may add a trigger
+-- that scrubs deleted ci ids.
+
+-- ============================================================================
+-- 1. Enums
+-- ============================================================================
+do $$ begin
+  create type public.change_type as enum ('standard','normal','emergency');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.change_state as enum (
+    'draft','cab_review','approved','scheduled','in_progress','done','rolled_back','cancelled'
+  );
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.change_approval_role as enum ('cab_member','manager','security');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.change_approval_state as enum ('pending','approved','rejected','abstained');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.change_task_state as enum ('todo','in_progress','done','blocked');
+exception when duplicate_object then null; end $$;
+
+-- ============================================================================
+-- 2. changes — core change request record
+-- ============================================================================
+create table if not exists public.changes (
+  id                  uuid primary key default gen_random_uuid(),
+  tenant_id           uuid not null references public.tenants(id) on delete cascade,
+  number              text not null,
+  title               text not null,
+  description         text,
+  type                public.change_type not null default 'normal',
+  risk_score          numeric(4,3),
+  state               public.change_state not null default 'draft',
+  planned_start       timestamptz,
+  planned_end         timestamptz,
+  actual_start        timestamptz,
+  actual_end          timestamptz,
+  requester_id        uuid not null references public.profiles(id) on delete restrict,
+  implementer_id      uuid references public.profiles(id) on delete set null,
+  affected_ci_ids     uuid[] not null default '{}',
+  rollback_plan       text,
+  template_id         uuid,
+  ai_classification   jsonb,
+  created_at          timestamptz not null default now(),
+  updated_at          timestamptz not null default now(),
+  unique (tenant_id, number),
+  check (risk_score is null or (risk_score >= 0 and risk_score <= 1))
+);
+create index if not exists idx_changes_tenant on public.changes(tenant_id);
+create index if not exists idx_changes_requester on public.changes(requester_id);
+create index if not exists idx_changes_implementer on public.changes(implementer_id) where implementer_id is not null;
+create index if not exists idx_changes_state on public.changes(tenant_id, state);
+create index if not exists idx_changes_planned on public.changes(tenant_id, planned_start) where planned_start is not null;
+create index if not exists idx_changes_open on public.changes(tenant_id, state) where state not in ('done','rolled_back','cancelled');
+
+drop trigger if exists trg_changes_updated_at on public.changes;
+create trigger trg_changes_updated_at
+  before update on public.changes
+  for each row execute function public.set_updated_at();
+
+-- Per-tenant CHG number sequence (mirrors allocate_ticket_number)
+create table if not exists public.change_number_seq (
+  tenant_id  uuid primary key references public.tenants(id) on delete cascade,
+  next_value bigint not null default 1
+);
+
+create or replace function public.allocate_change_number(p_tenant uuid)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_next bigint;
+begin
+  insert into public.change_number_seq (tenant_id, next_value)
+  values (p_tenant, 1)
+  on conflict (tenant_id) do nothing;
+
+  update public.change_number_seq
+     set next_value = next_value + 1
+   where tenant_id = p_tenant
+   returning next_value - 1 into v_next;
+
+  return 'CHG-' || lpad(v_next::text, 6, '0');
+end;
+$$;
+
+revoke all on function public.allocate_change_number(uuid) from public;
+grant execute on function public.allocate_change_number(uuid) to authenticated, service_role;
+
+-- ============================================================================
+-- 3. change_approvals — CAB / manager / security sign-off rows
+-- ============================================================================
+create table if not exists public.change_approvals (
+  id            uuid primary key default gen_random_uuid(),
+  tenant_id     uuid not null references public.tenants(id) on delete cascade,
+  change_id     uuid not null references public.changes(id) on delete cascade,
+  approver_id   uuid not null references public.profiles(id) on delete cascade,
+  role          public.change_approval_role not null default 'cab_member',
+  state         public.change_approval_state not null default 'pending',
+  decided_at    timestamptz,
+  comment       text,
+  created_at    timestamptz not null default now()
+);
+create index if not exists idx_change_approvals_change on public.change_approvals(change_id);
+create index if not exists idx_change_approvals_approver on public.change_approvals(approver_id, state);
+create index if not exists idx_change_approvals_tenant on public.change_approvals(tenant_id);
+create unique index if not exists uniq_change_approvals_member
+  on public.change_approvals(change_id, approver_id, role);
+
+-- ============================================================================
+-- 4. change_tasks — implementation steps with sequence + estimates
+-- ============================================================================
+create table if not exists public.change_tasks (
+  id              uuid primary key default gen_random_uuid(),
+  tenant_id       uuid not null references public.tenants(id) on delete cascade,
+  change_id       uuid not null references public.changes(id) on delete cascade,
+  sequence        int not null default 0,
+  title           text not null,
+  description     text,
+  owner_id        uuid references public.profiles(id) on delete set null,
+  state           public.change_task_state not null default 'todo',
+  est_minutes     int,
+  actual_minutes  int,
+  started_at      timestamptz,
+  completed_at    timestamptz,
+  created_at      timestamptz not null default now(),
+  updated_at      timestamptz not null default now()
+);
+create index if not exists idx_change_tasks_change on public.change_tasks(change_id, sequence);
+create index if not exists idx_change_tasks_owner on public.change_tasks(owner_id) where owner_id is not null;
+create index if not exists idx_change_tasks_tenant on public.change_tasks(tenant_id);
+
+drop trigger if exists trg_change_tasks_updated_at on public.change_tasks;
+create trigger trg_change_tasks_updated_at
+  before update on public.change_tasks
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 5. change_ticket_links — many-to-many between changes and tickets
+-- ============================================================================
+create table if not exists public.change_ticket_links (
+  id          uuid primary key default gen_random_uuid(),
+  tenant_id   uuid not null references public.tenants(id) on delete cascade,
+  change_id   uuid not null references public.changes(id) on delete cascade,
+  ticket_id   uuid not null references public.tickets(id) on delete cascade,
+  link_kind   text not null default 'caused_by' check (link_kind in ('caused_by','related','resolves')),
+  created_by  uuid references public.profiles(id) on delete set null,
+  created_at  timestamptz not null default now(),
+  unique (change_id, ticket_id, link_kind)
+);
+create index if not exists idx_change_ticket_links_change on public.change_ticket_links(change_id);
+create index if not exists idx_change_ticket_links_ticket on public.change_ticket_links(ticket_id);
+create index if not exists idx_change_ticket_links_tenant on public.change_ticket_links(tenant_id);
+
+-- ============================================================================
+-- 6. RLS helper — who can act on changes
+-- CAB members + manager + admin/owner see all in tenant
+-- requester sees own; implementer sees assigned
+-- ============================================================================
+create or replace function public.is_cab_member()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select role in ('manager','admin','owner') from public.profiles where id = auth.uid()
+$$;
+
+create or replace function public.can_view_all_changes()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select role in ('agent','manager','admin','owner') from public.profiles where id = auth.uid()
+$$;
+
+-- ============================================================================
+-- 7. RLS — changes
+-- ============================================================================
+alter table public.changes enable row level security;
+
+drop policy if exists changes_select_visibility on public.changes;
+create policy changes_select_visibility on public.changes
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      requester_id = auth.uid()
+      or implementer_id = auth.uid()
+      or public.can_view_all_changes()
+    )
+  );
+
+drop policy if exists changes_insert_self on public.changes;
+create policy changes_insert_self on public.changes
+  for insert
+  with check (
+    tenant_id = public.current_user_tenant()
+    and (requester_id = auth.uid() or public.can_view_all_changes())
+  );
+
+drop policy if exists changes_update_visibility on public.changes;
+create policy changes_update_visibility on public.changes
+  for update
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      implementer_id = auth.uid()
+      or public.can_view_all_changes()
+      or (requester_id = auth.uid() and state in ('draft','cab_review'))
+    )
+  )
+  with check (tenant_id = public.current_user_tenant());
+
+-- ============================================================================
+-- 8. RLS — change_approvals
+-- approvers see their own row; CAB / admins see all in tenant
+-- ============================================================================
+alter table public.change_approvals enable row level security;
+
+drop policy if exists change_approvals_select on public.change_approvals;
+create policy change_approvals_select on public.change_approvals
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      approver_id = auth.uid()
+      or public.can_view_all_changes()
+    )
+  );
+
+drop policy if exists change_approvals_update_self on public.change_approvals;
+create policy change_approvals_update_self on public.change_approvals
+  for update
+  using (
+    tenant_id = public.current_user_tenant()
+    and approver_id = auth.uid()
+  )
+  with check (
+    tenant_id = public.current_user_tenant()
+    and approver_id = auth.uid()
+  );
+
+-- ============================================================================
+-- 9. RLS — change_tasks (piggyback on changes visibility)
+-- ============================================================================
+alter table public.change_tasks enable row level security;
+
+drop policy if exists change_tasks_select on public.change_tasks;
+create policy change_tasks_select on public.change_tasks
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and exists (
+      select 1 from public.changes c
+       where c.id = change_tasks.change_id
+         and (
+           c.requester_id = auth.uid()
+           or c.implementer_id = auth.uid()
+           or public.can_view_all_changes()
+         )
+    )
+  );
+
+drop policy if exists change_tasks_update on public.change_tasks;
+create policy change_tasks_update on public.change_tasks
+  for update
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      owner_id = auth.uid()
+      or public.can_view_all_changes()
+    )
+  )
+  with check (tenant_id = public.current_user_tenant());
+
+-- ============================================================================
+-- 10. RLS — change_ticket_links (piggyback)
+-- ============================================================================
+alter table public.change_ticket_links enable row level security;
+
+drop policy if exists change_ticket_links_select on public.change_ticket_links;
+create policy change_ticket_links_select on public.change_ticket_links
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and exists (
+      select 1 from public.changes c
+       where c.id = change_ticket_links.change_id
+         and (
+           c.requester_id = auth.uid()
+           or c.implementer_id = auth.uid()
+           or public.can_view_all_changes()
+         )
+    )
+  );
+
+-- ============================================================================
+-- 11. Seed: default CAB role marker for ifbash tenant
+-- We do not pre-create approver rows (those are per-change) but we ensure the
+-- ifbash tenant has at least one admin/manager flagged as CAB-eligible already
+-- via the existing role enum. The function is_cab_member() already covers this.
+-- This block is a noop placeholder so the migration carries the seed contract.
+-- ============================================================================
+do $$
+declare v_tenant uuid;
+begin
+  select id into v_tenant from public.tenants where slug = 'ifbash';
+  if v_tenant is null then return; end if;
+  -- Ensure number sequence row exists so the first allocate is fast.
+  insert into public.change_number_seq (tenant_id, next_value)
+  values (v_tenant, 1)
+  on conflict (tenant_id) do nothing;
+end $$;
+-- ifBash Sprint 5 — pre-approved standard-change templates
+-- A template carries a default task list + auto-approve flag. When a draft
+-- change semantically matches a template at high confidence, the AI suggests
+-- skipping CAB review.
+
+create table if not exists public.change_templates (
+  id                    uuid primary key default gen_random_uuid(),
+  tenant_id             uuid not null references public.tenants(id) on delete cascade,
+  slug                  text not null,
+  name                  text not null,
+  description           text,
+  default_tasks         jsonb not null default '[]'::jsonb,
+  auto_approve          boolean not null default true,
+  risk_score_ceiling    numeric(4,3) not null default 0.300,
+  is_active             boolean not null default true,
+  last_used_at          timestamptz,
+  created_at            timestamptz not null default now(),
+  updated_at            timestamptz not null default now(),
+  unique (tenant_id, slug),
+  check (risk_score_ceiling >= 0 and risk_score_ceiling <= 1)
+);
+create index if not exists idx_change_templates_tenant on public.change_templates(tenant_id);
+create index if not exists idx_change_templates_active on public.change_templates(tenant_id, is_active);
+
+drop trigger if exists trg_change_templates_updated_at on public.change_templates;
+create trigger trg_change_templates_updated_at
+  before update on public.change_templates
+  for each row execute function public.set_updated_at();
+
+alter table public.change_templates enable row level security;
+
+drop policy if exists change_templates_select on public.change_templates;
+create policy change_templates_select on public.change_templates
+  for select using (tenant_id = public.current_user_tenant());
+
+drop policy if exists change_templates_admin_write on public.change_templates;
+create policy change_templates_admin_write on public.change_templates
+  for all
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner())
+  with check (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- Seed three standard templates for ifbash tenant
+-- ============================================================================
+do $$
+declare v_tenant uuid;
+begin
+  select id into v_tenant from public.tenants where slug = 'ifbash';
+  if v_tenant is null then return; end if;
+
+  insert into public.change_templates (tenant_id, slug, name, description, default_tasks, auto_approve, risk_score_ceiling)
+  values
+    (
+      v_tenant,
+      'password-reset-bulk',
+      'Password reset bulk',
+      'Bulk reset of expired passwords for a department or role group. Pre-approved when reset count is below 50 and no privileged accounts are included.',
+      jsonb_build_array(
+        jsonb_build_object('sequence', 1, 'title', 'Identify target accounts', 'est_minutes', 15),
+        jsonb_build_object('sequence', 2, 'title', 'Run reset script in staging', 'est_minutes', 20),
+        jsonb_build_object('sequence', 3, 'title', 'Run reset script in production', 'est_minutes', 30),
+        jsonb_build_object('sequence', 4, 'title', 'Notify users via email', 'est_minutes', 10),
+        jsonb_build_object('sequence', 5, 'title', 'Verify login for sample of users', 'est_minutes', 15)
+      ),
+      true,
+      0.250
+    ),
+    (
+      v_tenant,
+      'server-reboot-scheduled',
+      'Server reboot scheduled',
+      'Scheduled reboot of a non-production server during the standard maintenance window. Pre-approved when scope is single host and no public-facing service.',
+      jsonb_build_array(
+        jsonb_build_object('sequence', 1, 'title', 'Notify dependent service owners', 'est_minutes', 10),
+        jsonb_build_object('sequence', 2, 'title', 'Drain traffic if applicable', 'est_minutes', 15),
+        jsonb_build_object('sequence', 3, 'title', 'Snapshot state', 'est_minutes', 10),
+        jsonb_build_object('sequence', 4, 'title', 'Reboot host', 'est_minutes', 15),
+        jsonb_build_object('sequence', 5, 'title', 'Verify service health post-reboot', 'est_minutes', 20)
+      ),
+      true,
+      0.300
+    ),
+    (
+      v_tenant,
+      'dns-record-update',
+      'DNS record update',
+      'Add, modify or remove a DNS record in the corporate zone. Pre-approved for non-public-facing records and TTL >= 300s.',
+      jsonb_build_array(
+        jsonb_build_object('sequence', 1, 'title', 'Confirm record change with requester', 'est_minutes', 10),
+        jsonb_build_object('sequence', 2, 'title', 'Apply change in DNS provider console', 'est_minutes', 10),
+        jsonb_build_object('sequence', 3, 'title', 'Verify resolution from internal resolver', 'est_minutes', 10),
+        jsonb_build_object('sequence', 4, 'title', 'Verify resolution from external resolver', 'est_minutes', 10),
+        jsonb_build_object('sequence', 5, 'title', 'Document change in CMDB', 'est_minutes', 10)
+      ),
+      true,
+      0.200
+    )
+  on conflict (tenant_id, slug) do nothing;
+end $$;
+-- ifBash Sprint 6 — knowledge base + pgvector semantic search
+-- Powers: /kb browse, /kb/[slug], /faq, /policies, deflection, AI authoring.
+
+-- ============================================================================
+-- 0. Extensions
+-- ============================================================================
+create extension if not exists vector;
+
+-- ============================================================================
+-- 1. Enums
+-- ============================================================================
+do $$ begin
+  create type public.kb_state as enum ('draft','in_review','published','retired');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.kb_view_source as enum ('search','ticket_form','faq_browse','direct','related');
+exception when duplicate_object then null; end $$;
+
+-- ============================================================================
+-- 2. kb_categories — tree
+-- ============================================================================
+create table if not exists public.kb_categories (
+  id           uuid primary key default gen_random_uuid(),
+  tenant_id    uuid not null references public.tenants(id) on delete cascade,
+  parent_id    uuid references public.kb_categories(id) on delete cascade,
+  slug         text not null,
+  name         text not null,
+  description  text,
+  sort_order   int not null default 0,
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now(),
+  unique (tenant_id, slug)
+);
+create index if not exists idx_kb_categories_tenant on public.kb_categories(tenant_id);
+create index if not exists idx_kb_categories_parent on public.kb_categories(parent_id);
+
+drop trigger if exists trg_kb_categories_updated_at on public.kb_categories;
+create trigger trg_kb_categories_updated_at
+  before update on public.kb_categories
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 3. kb_articles
+-- ============================================================================
+create table if not exists public.kb_articles (
+  id                uuid primary key default gen_random_uuid(),
+  tenant_id         uuid not null references public.tenants(id) on delete cascade,
+  slug              text not null,
+  title             text not null,
+  body              text not null default '',
+  body_tiptap       jsonb,
+  category_id       uuid references public.kb_categories(id) on delete set null,
+  state             public.kb_state not null default 'draft',
+  version           int not null default 1,
+  embedding         vector(1536),
+  helpful_count     int not null default 0,
+  unhelpful_count   int not null default 0,
+  tags              text[] not null default array[]::text[],
+  author_id         uuid references public.profiles(id) on delete set null,
+  reviewer_id       uuid references public.profiles(id) on delete set null,
+  source_ticket_id  uuid references public.tickets(id) on delete set null,
+  published_at      timestamptz,
+  retired_at        timestamptz,
+  created_at        timestamptz not null default now(),
+  updated_at        timestamptz not null default now(),
+  unique (tenant_id, slug)
+);
+create index if not exists idx_kb_articles_tenant on public.kb_articles(tenant_id);
+create index if not exists idx_kb_articles_category on public.kb_articles(category_id);
+create index if not exists idx_kb_articles_author on public.kb_articles(author_id);
+
+drop trigger if exists trg_kb_articles_updated_at on public.kb_articles;
+create trigger trg_kb_articles_updated_at
+  before update on public.kb_articles
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 4. kb_article_versions — body history
+-- ============================================================================
+create table if not exists public.kb_article_versions (
+  id              uuid primary key default gen_random_uuid(),
+  tenant_id       uuid not null references public.tenants(id) on delete cascade,
+  article_id      uuid not null references public.kb_articles(id) on delete cascade,
+  version         int not null,
+  title           text not null,
+  body            text not null default '',
+  body_tiptap     jsonb,
+  changed_by      uuid references public.profiles(id) on delete set null,
+  changed_at      timestamptz not null default now(),
+  change_summary  text,
+  unique (article_id, version)
+);
+create index if not exists idx_kb_article_versions_article on public.kb_article_versions(article_id, version desc);
+
+-- ============================================================================
+-- 5. kb_article_views — analytics
+-- ============================================================================
+create table if not exists public.kb_article_views (
+  id          uuid primary key default gen_random_uuid(),
+  tenant_id   uuid not null references public.tenants(id) on delete cascade,
+  article_id  uuid not null references public.kb_articles(id) on delete cascade,
+  viewer_id   uuid references public.profiles(id) on delete set null,
+  source      public.kb_view_source not null default 'direct',
+  at          timestamptz not null default now()
+);
+create index if not exists idx_kb_article_views_article on public.kb_article_views(article_id, at desc);
+create index if not exists idx_kb_article_views_tenant on public.kb_article_views(tenant_id, at desc);
+
+-- ============================================================================
+-- 6. RLS — kb_categories
+-- ============================================================================
+alter table public.kb_categories enable row level security;
+
+drop policy if exists kb_categories_select on public.kb_categories;
+create policy kb_categories_select on public.kb_categories
+  for select using (tenant_id = public.current_user_tenant());
+
+drop policy if exists kb_categories_admin_write on public.kb_categories;
+create policy kb_categories_admin_write on public.kb_categories
+  for all
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner())
+  with check (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 7. RLS — kb_articles
+--    published rows readable by all in tenant
+--    drafts/in_review readable by author/reviewer/admin/owner/agent only
+-- ============================================================================
+create or replace function public.can_view_kb_drafts()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select role in ('agent','admin','owner') from public.profiles where id = auth.uid()
+$$;
+
+alter table public.kb_articles enable row level security;
+
+drop policy if exists kb_articles_select on public.kb_articles;
+create policy kb_articles_select on public.kb_articles
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      state = 'published'
+      or author_id = auth.uid()
+      or reviewer_id = auth.uid()
+      or public.can_view_kb_drafts()
+    )
+  );
+
+drop policy if exists kb_articles_insert on public.kb_articles;
+create policy kb_articles_insert on public.kb_articles
+  for insert
+  with check (
+    tenant_id = public.current_user_tenant()
+    and public.can_view_kb_drafts()
+  );
+
+drop policy if exists kb_articles_update on public.kb_articles;
+create policy kb_articles_update on public.kb_articles
+  for update
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      author_id = auth.uid()
+      or reviewer_id = auth.uid()
+      or public.is_admin_or_owner()
+    )
+  )
+  with check (tenant_id = public.current_user_tenant());
+
+drop policy if exists kb_articles_delete_admin on public.kb_articles;
+create policy kb_articles_delete_admin on public.kb_articles
+  for delete
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 8. RLS — kb_article_versions (read piggyback on article visibility)
+-- ============================================================================
+alter table public.kb_article_versions enable row level security;
+
+drop policy if exists kb_article_versions_select on public.kb_article_versions;
+create policy kb_article_versions_select on public.kb_article_versions
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and exists (
+      select 1 from public.kb_articles a
+       where a.id = kb_article_versions.article_id
+         and (
+           a.state = 'published'
+           or a.author_id = auth.uid()
+           or a.reviewer_id = auth.uid()
+           or public.can_view_kb_drafts()
+         )
+    )
+  );
+
+-- ============================================================================
+-- 9. RLS — kb_article_views (insert anyone in tenant; read admin/owner)
+-- ============================================================================
+alter table public.kb_article_views enable row level security;
+
+drop policy if exists kb_article_views_insert on public.kb_article_views;
+create policy kb_article_views_insert on public.kb_article_views
+  for insert
+  with check (tenant_id = public.current_user_tenant());
+
+drop policy if exists kb_article_views_admin_select on public.kb_article_views;
+create policy kb_article_views_admin_select on public.kb_article_views
+  for select
+  using (tenant_id = public.current_user_tenant() and public.can_view_kb_drafts());
+
+-- ============================================================================
+-- 10. Vote helpers — RPCs that bypass RLS to bump counters atomically
+-- ============================================================================
+create or replace function public.kb_vote_helpful(p_article uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  update public.kb_articles
+     set helpful_count = helpful_count + 1
+   where id = p_article
+     and tenant_id = public.current_user_tenant();
+end;
+$$;
+
+create or replace function public.kb_vote_unhelpful(p_article uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  update public.kb_articles
+     set unhelpful_count = unhelpful_count + 1
+   where id = p_article
+     and tenant_id = public.current_user_tenant();
+end;
+$$;
+
+revoke all on function public.kb_vote_helpful(uuid) from public;
+revoke all on function public.kb_vote_unhelpful(uuid) from public;
+grant execute on function public.kb_vote_helpful(uuid) to authenticated, service_role;
+grant execute on function public.kb_vote_unhelpful(uuid) to authenticated, service_role;
+
+-- ============================================================================
+-- 11. Cosine similarity search RPC — service-role wrapper for tenant scoping
+-- ============================================================================
+create or replace function public.kb_search_published(
+  p_tenant uuid,
+  p_query vector(1536),
+  p_limit int default 5
+)
+returns table (
+  id uuid,
+  slug text,
+  title text,
+  body text,
+  category_id uuid,
+  helpful_count int,
+  similarity numeric
+)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select a.id, a.slug, a.title, a.body, a.category_id, a.helpful_count,
+         (1 - (a.embedding <=> p_query))::numeric as similarity
+    from public.kb_articles a
+   where a.tenant_id = p_tenant
+     and a.state = 'published'
+     and a.embedding is not null
+   order by a.embedding <=> p_query
+   limit greatest(p_limit, 1);
+$$;
+
+revoke all on function public.kb_search_published(uuid, vector, int) from public;
+grant execute on function public.kb_search_published(uuid, vector, int) to authenticated, service_role;
+
+-- ============================================================================
+-- 12. Seed — 5 published articles for ifbash tenant
+-- ============================================================================
+do $$
+declare
+  v_tenant uuid;
+  v_faq    uuid;
+  v_it     uuid;
+  v_access uuid;
+begin
+  select id into v_tenant from public.tenants where slug = 'ifbash';
+  if v_tenant is null then return; end if;
+
+  -- Categories
+  insert into public.kb_categories (tenant_id, slug, name, description, sort_order)
+  values
+    (v_tenant, 'faq',          'FAQ',          'Top frequently asked questions',          0),
+    (v_tenant, 'it-support',   'IT support',   'Hardware, software, network, accounts',   1),
+    (v_tenant, 'access',       'Access',       'Logins, passwords, MFA, VPN',             2),
+    (v_tenant, 'incidents',    'Incidents',    'How to raise, escalate, resolve',         3),
+    (v_tenant, 'self-service', 'Self service', 'Things you can do without raising a ticket', 4)
+  on conflict (tenant_id, slug) do nothing;
+
+  select id into v_faq    from public.kb_categories where tenant_id = v_tenant and slug = 'faq';
+  select id into v_it     from public.kb_categories where tenant_id = v_tenant and slug = 'it-support';
+  select id into v_access from public.kb_categories where tenant_id = v_tenant and slug = 'access';
+
+  -- Articles
+  insert into public.kb_articles (tenant_id, slug, title, body, category_id, state, published_at, tags)
+  values
+    (v_tenant, 'reset-outlook-password',
+     'Reset your Outlook password',
+     E'# Reset your Outlook password\n\nIf you cannot sign into Outlook, follow these steps:\n\n1. Go to portal.office.com.\n2. Click sign in and enter your work email.\n3. Click forgot my password.\n4. Choose verify by SMS or authenticator app.\n5. Enter the code, then set a new password that is at least 12 characters and includes a number, symbol, and upper case letter.\n6. Sign back into Outlook on your laptop. You may need to restart the app.\n\nIf you still cannot sign in after a reset, raise an IT ticket with category Access.',
+     v_access, 'published', now(), array['outlook','password','email','reset']),
+    (v_tenant, 'connect-to-office-vpn',
+     'Connect to the office VPN',
+     E'# Connect to the office VPN\n\nThe corporate VPN is required for accessing internal apps from outside the office network.\n\n1. Open the Cisco Secure Client on your laptop. If it is not installed, raise an IT ticket.\n2. Server address is vpn.ifbash.com.\n3. Enter your standard SSO credentials.\n4. Approve the multi factor push on your phone.\n5. Once connected the lock icon turns green.\n\nIf you see a certificate error, sign out, restart the laptop, and try again. Persistent failures should be raised to IT with category Network.',
+     v_access, 'published', now(), array['vpn','cisco','remote','network']),
+    (v_tenant, 'request-new-laptop',
+     'Request a new laptop',
+     E'# Request a new laptop\n\nLaptops are refreshed on a 3 year cycle or when there is a hardware fault that cannot be repaired.\n\n1. Open the service catalog and choose request asset.\n2. Pick laptop and select the model band that matches your role.\n3. Add a short justification, especially if requesting outside the standard refresh cycle.\n4. Submit. Your manager receives an approval request.\n5. Once approved, IT typically delivers within 5 business days.\n\nFor urgent replacement of a broken laptop, raise a P2 incident under IT, Hardware.',
+     v_it, 'published', now(), array['laptop','hardware','asset','request']),
+    (v_tenant, 'submit-a-p1-incident',
+     'Submit a P1 incident',
+     E'# Submit a P1 incident\n\nP1 means a full outage or business critical impact, for example multiple users blocked, security breach, or data loss.\n\n1. Open helpdesk and click new ticket.\n2. Set the title to a clear one line description, for example payroll system unreachable.\n3. Set priority to P1.\n4. Add description with what failed, when it started, who is affected, and what was changed before the failure.\n5. Submit. The on call agent is paged immediately and the SLA clock starts.\n\nDo not use P1 for single user issues. Those are P2 or P3 depending on impact.',
+     v_faq, 'published', now(), array['p1','incident','outage','priority']),
+    (v_tenant, 'self-service-wifi-access',
+     'Self service Wi-Fi access',
+     E'# Self service Wi-Fi access\n\nGuests and personal devices can join the open network without an IT ticket.\n\n1. Connect to ifbash-guest from your device Wi-Fi list.\n2. A captive portal opens. If it does not, browse to any http site.\n3. Enter your work email and accept the acceptable use policy.\n4. You are signed in for 24 hours. After that, repeat the steps to renew.\n\nFor work laptops you should be on ifbash-corp using SSO. Personal phones should stay on ifbash-guest.',
+     v_faq, 'published', now(), array['wifi','guest','self-service','network'])
+  on conflict (tenant_id, slug) do nothing;
+end $$;
+-- ifBash Sprint 6 — pgvector + analytics indexes
+-- HNSW for fast cosine similarity over kb_articles.embedding.
+
+-- HNSW index on the embedding (cosine ops). Built with sane defaults; tune later
+-- once we have real corpus volume. Created concurrently is not used to keep this
+-- migration runnable inside a transaction.
+do $$
+begin
+  if not exists (
+    select 1 from pg_indexes
+     where schemaname = 'public'
+       and tablename  = 'kb_articles'
+       and indexname  = 'idx_kb_articles_embedding_hnsw'
+  ) then
+    execute 'create index idx_kb_articles_embedding_hnsw on public.kb_articles using hnsw (embedding vector_cosine_ops)';
+  end if;
+end $$;
+
+-- Tenant + state filter (drives published-list reads + draft queues)
+create index if not exists idx_kb_articles_tenant_state on public.kb_articles(tenant_id, state);
+
+-- View analytics — group by source for deflection-rate KPI
+create index if not exists idx_kb_article_views_article_source on public.kb_article_views(article_id, source);
+-- ifBash Sprint 7 — surveys + responses
+-- CSAT post-incident-resolved + post-change-done. Multi-target via related_type/related_id (no FK).
+
+-- ============================================================================
+-- 1. Enums
+-- ============================================================================
+do $$ begin
+  create type public.survey_trigger as enum (
+    'post_incident_resolved',
+    'post_change_done',
+    'scheduled',
+    'manual'
+  );
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.survey_related_type as enum ('ticket','change','none');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.survey_sentiment as enum ('positive','neutral','negative');
+exception when duplicate_object then null; end $$;
+
+-- ============================================================================
+-- 2. surveys
+-- questions JSONB shape: array of { id: string, type: 'rating'|'text'|'choice',
+--   label: string, required: bool, options?: string[] }
+-- ============================================================================
+create table if not exists public.surveys (
+  id           uuid primary key default gen_random_uuid(),
+  tenant_id    uuid not null references public.tenants(id) on delete cascade,
+  slug         text not null,
+  name         text not null,
+  description  text,
+  trigger      public.survey_trigger not null default 'manual',
+  questions    jsonb not null default '[]'::jsonb,
+  active       boolean not null default true,
+  created_by   uuid references public.profiles(id) on delete set null,
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now(),
+  unique (tenant_id, slug)
+);
+create index if not exists idx_surveys_tenant on public.surveys(tenant_id);
+create index if not exists idx_surveys_trigger on public.surveys(tenant_id, trigger) where active = true;
+
+drop trigger if exists trg_surveys_updated_at on public.surveys;
+create trigger trg_surveys_updated_at
+  before update on public.surveys
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 3. survey_responses
+-- related_id has no FK (multi-target: ticket OR change OR none)
+-- ============================================================================
+create table if not exists public.survey_responses (
+  id             uuid primary key default gen_random_uuid(),
+  tenant_id      uuid not null references public.tenants(id) on delete cascade,
+  survey_id      uuid not null references public.surveys(id) on delete cascade,
+  respondent_id  uuid references public.profiles(id) on delete set null,
+  related_type   public.survey_related_type not null default 'none',
+  related_id     uuid,
+  score          int check (score is null or (score between 1 and 5)),
+  answers        jsonb not null default '{}'::jsonb,
+  comments       text,
+  ai_sentiment   public.survey_sentiment,
+  ai_themes      text[],
+  ai_confidence  numeric(4,3),
+  ai_processed_at timestamptz,
+  submitted_at   timestamptz,
+  created_at     timestamptz not null default now()
+);
+create index if not exists idx_survey_responses_tenant on public.survey_responses(tenant_id);
+create index if not exists idx_survey_responses_survey on public.survey_responses(survey_id, submitted_at desc);
+create index if not exists idx_survey_responses_respondent on public.survey_responses(respondent_id, submitted_at desc);
+create index if not exists idx_survey_responses_related on public.survey_responses(tenant_id, related_type, related_id);
+create index if not exists idx_survey_responses_pending_ai on public.survey_responses(tenant_id) where ai_sentiment is null and submitted_at is not null;
+
+-- ============================================================================
+-- 4. RLS — surveys
+-- Read: anyone in tenant (responders need to see active surveys).
+-- Write: admin/owner.
+-- ============================================================================
+alter table public.surveys enable row level security;
+
+drop policy if exists surveys_select on public.surveys;
+create policy surveys_select on public.surveys
+  for select using (tenant_id = public.current_user_tenant());
+
+drop policy if exists surveys_admin_write on public.surveys;
+create policy surveys_admin_write on public.surveys
+  for all
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner())
+  with check (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 5. RLS — survey_responses
+-- Respondent reads own. Admin/owner reads all in tenant.
+-- Agents read responses tied to tickets they are assigned to.
+-- ============================================================================
+alter table public.survey_responses enable row level security;
+
+drop policy if exists survey_responses_select_own on public.survey_responses;
+create policy survey_responses_select_own on public.survey_responses
+  for select
+  using (
+    tenant_id = public.current_user_tenant()
+    and (
+      respondent_id = auth.uid()
+      or public.is_admin_or_owner()
+      or (
+        related_type = 'ticket'
+        and exists (
+          select 1 from public.tickets t
+           where t.id = survey_responses.related_id
+             and t.assignee_id = auth.uid()
+        )
+      )
+    )
+  );
+
+drop policy if exists survey_responses_insert_self on public.survey_responses;
+create policy survey_responses_insert_self on public.survey_responses
+  for insert
+  with check (
+    tenant_id = public.current_user_tenant()
+    and (respondent_id = auth.uid() or respondent_id is null)
+  );
+
+drop policy if exists survey_responses_update_self on public.survey_responses;
+create policy survey_responses_update_self on public.survey_responses
+  for update
+  using (
+    tenant_id = public.current_user_tenant()
+    and (respondent_id = auth.uid() or public.is_admin_or_owner())
+  )
+  with check (tenant_id = public.current_user_tenant());
+
+-- ============================================================================
+-- 6. Seed default post-resolution CSAT for ifbash tenant (idempotent)
+-- ============================================================================
+do $$
+declare
+  v_tenant uuid;
+begin
+  select id into v_tenant from public.tenants where slug = 'ifbash';
+  if v_tenant is null then return; end if;
+
+  insert into public.surveys (tenant_id, slug, name, description, trigger, questions, active)
+  values (
+    v_tenant,
+    'post-resolution-csat',
+    'Post-resolution CSAT',
+    'Quick three-question survey sent when an incident is resolved.',
+    'post_incident_resolved',
+    jsonb_build_array(
+      jsonb_build_object(
+        'id', 'overall',
+        'type', 'rating',
+        'label', 'How satisfied were you?',
+        'required', true
+      ),
+      jsonb_build_object(
+        'id', 'worked_well',
+        'type', 'text',
+        'label', 'What worked well?',
+        'required', false
+      ),
+      jsonb_build_object(
+        'id', 'better',
+        'type', 'text',
+        'label', 'What could be better?',
+        'required', false
+      )
+    ),
+    true
+  )
+  on conflict (tenant_id, slug) do nothing;
+end $$;
+-- ifBash Sprint 7 — KPI views for the reports dashboard.
+-- All views are SECURITY INVOKER so RLS on underlying tables propagates.
+-- Views read-only by design; no DML granted.
+
+-- ============================================================================
+-- 1. Daily ticket volume per category (last 90d)
+-- ============================================================================
+create or replace view public.v_ticket_volume_daily
+with (security_invoker = true) as
+select
+  t.tenant_id,
+  date_trunc('day', t.created_at)::date           as day,
+  t.category_id,
+  c.slug                                          as category_slug,
+  c.name                                          as category_name,
+  count(*)::int                                   as ticket_count
+from public.tickets t
+left join public.ticket_categories c on c.id = t.category_id
+where t.created_at >= now() - interval '90 days'
+group by t.tenant_id, day, t.category_id, c.slug, c.name;
+
+-- ============================================================================
+-- 2. Resolution time (MTTR) per category × priority (last 90d)
+-- ============================================================================
+create or replace view public.v_ticket_resolution_time
+with (security_invoker = true) as
+select
+  t.tenant_id,
+  t.category_id,
+  c.slug                                          as category_slug,
+  c.name                                          as category_name,
+  t.priority,
+  count(*) filter (where t.resolved_at is not null)::int                                as resolved_count,
+  avg(extract(epoch from (t.resolved_at - t.created_at))/60)
+    filter (where t.resolved_at is not null)::numeric(10,2)                              as avg_minutes,
+  percentile_cont(0.5) within group (order by extract(epoch from (t.resolved_at - t.created_at))/60)
+    filter (where t.resolved_at is not null)::numeric(10,2)                              as median_minutes,
+  percentile_cont(0.9) within group (order by extract(epoch from (t.resolved_at - t.created_at))/60)
+    filter (where t.resolved_at is not null)::numeric(10,2)                              as p90_minutes
+from public.tickets t
+left join public.ticket_categories c on c.id = t.category_id
+where t.created_at >= now() - interval '90 days'
+group by t.tenant_id, t.category_id, c.slug, c.name, t.priority;
+
+-- ============================================================================
+-- 3. First-contact resolution: tickets resolved with <= 2 non-system comments
+-- ============================================================================
+create or replace view public.v_first_contact_resolution
+with (security_invoker = true) as
+with comment_counts as (
+  select
+    tc.tenant_id,
+    tc.ticket_id,
+    count(*) filter (where tc.kind = 'comment')::int as comment_count
+  from public.ticket_comments tc
+  group by tc.tenant_id, tc.ticket_id
+)
+select
+  t.tenant_id,
+  t.category_id,
+  c.slug                                                as category_slug,
+  c.name                                                as category_name,
+  count(*) filter (where t.state in ('resolved','closed'))::int                          as resolved_count,
+  count(*) filter (
+    where t.state in ('resolved','closed')
+      and coalesce(cc.comment_count, 0) <= 2
+  )::int                                                                                  as fcr_count,
+  case
+    when count(*) filter (where t.state in ('resolved','closed')) = 0 then 0
+    else round(
+      100.0 * count(*) filter (
+        where t.state in ('resolved','closed')
+          and coalesce(cc.comment_count, 0) <= 2
+      ) / count(*) filter (where t.state in ('resolved','closed')),
+      2
+    )
+  end::numeric(5,2)                                                                        as fcr_pct
+from public.tickets t
+left join public.ticket_categories c on c.id = t.category_id
+left join comment_counts cc on cc.ticket_id = t.id
+where t.created_at >= now() - interval '90 days'
+group by t.tenant_id, t.category_id, c.slug, c.name;
+
+-- ============================================================================
+-- 4. SLA compliance % per category × priority (last 90d)
+-- ============================================================================
+create or replace view public.v_sla_compliance
+with (security_invoker = true) as
+select
+  t.tenant_id,
+  t.category_id,
+  c.slug                                                as category_slug,
+  c.name                                                as category_name,
+  t.priority,
+  count(*)::int                                         as total,
+  count(*) filter (where t.sla_breached = false)::int   as met,
+  case
+    when count(*) = 0 then 100
+    else round(100.0 * count(*) filter (where t.sla_breached = false) / count(*), 2)
+  end::numeric(5,2)                                      as compliance_pct
+from public.tickets t
+left join public.ticket_categories c on c.id = t.category_id
+where t.created_at >= now() - interval '90 days'
+group by t.tenant_id, t.category_id, c.slug, c.name, t.priority;
+
+-- ============================================================================
+-- 5. Auto-resolve rate (AI-driven closures)
+-- ============================================================================
+create or replace view public.v_auto_resolve_rate
+with (security_invoker = true) as
+select
+  t.tenant_id,
+  count(*)::int                                                                          as total,
+  count(*) filter (
+    where t.ai_classification ? 'auto_resolved'
+      and (t.ai_classification->>'auto_resolved')::boolean = true
+  )::int                                                                                  as auto_resolved,
+  case
+    when count(*) = 0 then 0
+    else round(
+      100.0 * count(*) filter (
+        where t.ai_classification ? 'auto_resolved'
+          and (t.ai_classification->>'auto_resolved')::boolean = true
+      ) / count(*),
+      2
+    )
+  end::numeric(5,2)                                                                       as auto_resolve_pct
+from public.tickets t
+where t.created_at >= now() - interval '30 days'
+group by t.tenant_id;
+
+-- ============================================================================
+-- 6. Deflection rate proxy
+-- KB views from ticket form vs new ticket creates (last 30d).
+-- If kb_article_views table not yet created (Sprint 6), view returns 0 for views.
+-- ============================================================================
+do $$
+begin
+  if not exists (
+    select 1 from information_schema.tables
+     where table_schema = 'public' and table_name = 'kb_article_views'
+  ) then
+    create table public.kb_article_views (
+      id           uuid primary key default gen_random_uuid(),
+      tenant_id    uuid not null references public.tenants(id) on delete cascade,
+      article_id   uuid,
+      user_id      uuid references public.profiles(id) on delete set null,
+      source       text,
+      at           timestamptz not null default now()
+    );
+    alter table public.kb_article_views enable row level security;
+    create policy kb_article_views_select on public.kb_article_views
+      for select using (tenant_id = public.current_user_tenant());
+    create policy kb_article_views_insert on public.kb_article_views
+      for insert with check (tenant_id = public.current_user_tenant());
+  end if;
+end $$;
+
+create or replace view public.v_deflection_rate
+with (security_invoker = true) as
+with views as (
+  select tenant_id, count(*)::int as deflections
+    from public.kb_article_views
+   where source = 'ticket_form'
+     and at >= now() - interval '30 days'
+   group by tenant_id
+),
+opens as (
+  select tenant_id, count(*)::int as form_submits
+    from public.tickets
+   where source = 'portal'
+     and created_at >= now() - interval '30 days'
+   group by tenant_id
+)
+select
+  coalesce(v.tenant_id, o.tenant_id)              as tenant_id,
+  coalesce(v.deflections, 0)                      as deflections,
+  coalesce(o.form_submits, 0)                     as form_submits,
+  case
+    when coalesce(v.deflections, 0) + coalesce(o.form_submits, 0) = 0 then 0
+    else round(
+      100.0 * coalesce(v.deflections, 0)
+        / (coalesce(v.deflections, 0) + coalesce(o.form_submits, 0)),
+      2
+    )
+  end::numeric(5,2)                                as deflection_pct
+from views v
+full outer join opens o on o.tenant_id = v.tenant_id;
+
+-- ============================================================================
+-- 7. AI cost per resolved ticket (last 30d)
+-- ============================================================================
+create or replace view public.v_ai_cost_per_resolved
+with (security_invoker = true) as
+with ai as (
+  select tenant_id, sum(cost_usd)::numeric(12,4) as ai_spend_usd
+    from public.ai_actions
+   where outcome = 'success'
+     and at >= now() - interval '30 days'
+   group by tenant_id
+),
+res as (
+  select tenant_id, count(*)::int as resolved_count
+    from public.tickets
+   where resolved_at >= now() - interval '30 days'
+   group by tenant_id
+)
+select
+  coalesce(ai.tenant_id, res.tenant_id)           as tenant_id,
+  coalesce(ai.ai_spend_usd, 0)                    as ai_spend_usd,
+  coalesce(res.resolved_count, 0)                 as resolved_count,
+  case
+    when coalesce(res.resolved_count, 0) = 0 then 0
+    else round(coalesce(ai.ai_spend_usd, 0) / res.resolved_count, 4)
+  end::numeric(12,4)                               as cost_per_resolved_usd
+from ai
+full outer join res on res.tenant_id = ai.tenant_id;
+
+-- ============================================================================
+-- 8. CSAT trend (avg score per ISO week, last 12 weeks)
+-- ============================================================================
+create or replace view public.v_csat_trend
+with (security_invoker = true) as
+select
+  sr.tenant_id,
+  date_trunc('week', sr.submitted_at)::date       as week,
+  count(*) filter (where sr.score is not null)::int                                       as response_count,
+  avg(sr.score) filter (where sr.score is not null)::numeric(4,2)                          as avg_score,
+  count(*) filter (where sr.ai_sentiment = 'positive')::int                                as positive_count,
+  count(*) filter (where sr.ai_sentiment = 'neutral')::int                                 as neutral_count,
+  count(*) filter (where sr.ai_sentiment = 'negative')::int                                as negative_count
+from public.survey_responses sr
+where sr.submitted_at is not null
+  and sr.submitted_at >= now() - interval '12 weeks'
+group by sr.tenant_id, week;
+
+-- ============================================================================
+-- 9. Grants — read-only via authenticated role; RLS enforced at base tables
+-- ============================================================================
+grant select on public.v_ticket_volume_daily      to authenticated;
+grant select on public.v_ticket_resolution_time   to authenticated;
+grant select on public.v_first_contact_resolution to authenticated;
+grant select on public.v_sla_compliance           to authenticated;
+grant select on public.v_auto_resolve_rate        to authenticated;
+grant select on public.v_deflection_rate          to authenticated;
+grant select on public.v_ai_cost_per_resolved     to authenticated;
+grant select on public.v_csat_trend               to authenticated;
+-- ifBash Sprint 8 — workplace profile extensions
+-- Adds ITSM directory + locale fields to profiles. NOT HR/payroll.
+
+alter table public.profiles
+  add column if not exists location text,
+  add column if not exists locale text not null default 'en',
+  add column if not exists about text,
+  add column if not exists joined_at date;
+
+-- department, job_title, manager_id, avatar_url already in 001_foundation.sql
+-- Add fresh indexes for directory + org-chart queries.
+create index if not exists idx_profiles_tenant_dept on public.profiles(tenant_id, department);
+create index if not exists idx_profiles_manager_self on public.profiles(manager_id) where manager_id is not null;
+-- ifBash Sprint 8 — workplace surface
+-- Announcements, kudos, FAQs, anonymous feedback. Tenant-scoped, RLS enforced.
+
+-- ============================================================================
+-- 1. announcements
+-- ============================================================================
+create table if not exists public.announcements (
+  id              uuid primary key default gen_random_uuid(),
+  tenant_id       uuid not null references public.tenants(id) on delete cascade,
+  title           text not null,
+  body_md         text not null default '',
+  -- per-locale translated bodies: { "hi": "...", "te": "..." }
+  body_translated jsonb not null default '{}'::jsonb,
+  -- audience: { "all": true } | { "departments": [..], "roles": [..], "user_ids": [..] }
+  audience        jsonb not null default jsonb_build_object('all', true),
+  category        text not null default 'general',
+  pinned          boolean not null default false,
+  published_at    timestamptz,
+  expires_at      timestamptz,
+  author_id       uuid references public.profiles(id) on delete set null,
+  created_at      timestamptz not null default now(),
+  updated_at      timestamptz not null default now()
+);
+create index if not exists idx_announcements_tenant on public.announcements(tenant_id, published_at desc);
+create index if not exists idx_announcements_active on public.announcements(tenant_id, pinned desc, published_at desc) where published_at is not null and (expires_at is null or expires_at > now());
+
+drop trigger if exists trg_announcements_updated_at on public.announcements;
+create trigger trg_announcements_updated_at
+  before update on public.announcements
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 2. announcement_reads
+-- ============================================================================
+create table if not exists public.announcement_reads (
+  announcement_id uuid not null references public.announcements(id) on delete cascade,
+  user_id         uuid not null references public.profiles(id) on delete cascade,
+  read_at         timestamptz not null default now(),
+  primary key (announcement_id, user_id)
+);
+create index if not exists idx_announcement_reads_user on public.announcement_reads(user_id);
+
+-- ============================================================================
+-- 3. kudos
+-- ============================================================================
+create table if not exists public.kudos (
+  id                     uuid primary key default gen_random_uuid(),
+  tenant_id              uuid not null references public.tenants(id) on delete cascade,
+  from_user_id           uuid not null references public.profiles(id) on delete cascade,
+  to_user_id             uuid not null references public.profiles(id) on delete cascade,
+  message                text not null,
+  public                 boolean not null default true,
+  ai_categorized_value   text,
+  at                     timestamptz not null default now(),
+  check (from_user_id <> to_user_id),
+  check (length(message) between 1 and 500)
+);
+create index if not exists idx_kudos_tenant_at on public.kudos(tenant_id, at desc);
+create index if not exists idx_kudos_to on public.kudos(to_user_id, at desc);
+create index if not exists idx_kudos_from on public.kudos(from_user_id, at desc);
+
+-- ============================================================================
+-- 4. faqs
+-- ============================================================================
+create table if not exists public.faqs (
+  id                uuid primary key default gen_random_uuid(),
+  tenant_id         uuid not null references public.tenants(id) on delete cascade,
+  slug              text not null,
+  question          text not null,
+  answer_md         text not null default '',
+  category          text not null default 'general',
+  sort_order        int not null default 100,
+  helpful_count     int not null default 0,
+  unhelpful_count   int not null default 0,
+  published         boolean not null default true,
+  created_at        timestamptz not null default now(),
+  updated_at        timestamptz not null default now(),
+  unique (tenant_id, slug)
+);
+create index if not exists idx_faqs_tenant_published on public.faqs(tenant_id, published, sort_order);
+
+drop trigger if exists trg_faqs_updated_at on public.faqs;
+create trigger trg_faqs_updated_at
+  before update on public.faqs
+  for each row execute function public.set_updated_at();
+
+-- ============================================================================
+-- 5. anonymous_feedback
+-- ============================================================================
+do $$ begin
+  create type public.feedback_category as enum ('suggestion','complaint','praise','bug');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create type public.feedback_sentiment as enum ('positive','neutral','negative');
+exception when duplicate_object then null; end $$;
+
+create table if not exists public.anonymous_feedback (
+  id              uuid primary key default gen_random_uuid(),
+  tenant_id       uuid not null references public.tenants(id) on delete cascade,
+  body            text not null,
+  category        public.feedback_category not null default 'suggestion',
+  ai_sentiment    public.feedback_sentiment,
+  submitted_at    timestamptz not null default now(),
+  check (length(body) between 1 and 4000)
+);
+create index if not exists idx_anon_feedback_tenant on public.anonymous_feedback(tenant_id, submitted_at desc);
+
+-- ============================================================================
+-- 6. RLS — announcements (everyone in tenant reads; admin/owner writes)
+-- ============================================================================
+alter table public.announcements enable row level security;
+
+drop policy if exists announcements_select on public.announcements;
+create policy announcements_select on public.announcements
+  for select using (tenant_id = public.current_user_tenant());
+
+drop policy if exists announcements_admin_write on public.announcements;
+create policy announcements_admin_write on public.announcements
+  for all
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner())
+  with check (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 7. RLS — announcement_reads (self only)
+-- ============================================================================
+alter table public.announcement_reads enable row level security;
+
+drop policy if exists announcement_reads_self on public.announcement_reads;
+create policy announcement_reads_self on public.announcement_reads
+  for all
+  using (user_id = auth.uid())
+  with check (user_id = auth.uid());
+
+-- ============================================================================
+-- 8. RLS — kudos (public visible to tenant; private only to from/to)
+-- ============================================================================
+alter table public.kudos enable row level security;
+
+drop policy if exists kudos_select on public.kudos;
+create policy kudos_select on public.kudos
+  for select using (
+    tenant_id = public.current_user_tenant()
+    and (
+      public = true
+      or from_user_id = auth.uid()
+      or to_user_id = auth.uid()
+      or public.is_admin_or_owner()
+    )
+  );
+
+drop policy if exists kudos_insert_self on public.kudos;
+create policy kudos_insert_self on public.kudos
+  for insert with check (
+    tenant_id = public.current_user_tenant()
+    and from_user_id = auth.uid()
+  );
+
+drop policy if exists kudos_delete_self on public.kudos;
+create policy kudos_delete_self on public.kudos
+  for delete using (
+    tenant_id = public.current_user_tenant()
+    and (from_user_id = auth.uid() or public.is_admin_or_owner())
+  );
+
+-- ============================================================================
+-- 9. RLS — faqs (read all in tenant; admin/owner writes)
+-- ============================================================================
+alter table public.faqs enable row level security;
+
+drop policy if exists faqs_select on public.faqs;
+create policy faqs_select on public.faqs
+  for select using (tenant_id = public.current_user_tenant());
+
+drop policy if exists faqs_admin_write on public.faqs;
+create policy faqs_admin_write on public.faqs
+  for all
+  using (tenant_id = public.current_user_tenant() and public.is_admin_or_owner())
+  with check (tenant_id = public.current_user_tenant() and public.is_admin_or_owner());
+
+-- ============================================================================
+-- 10. RLS — anonymous_feedback (anyone in tenant inserts; admin/owner reads)
+-- ============================================================================
+alter table public.anonymous_feedback enable row level security;
+
+drop policy if exists anon_feedback_insert on public.anonymous_feedback;
+create policy anon_feedback_insert on public.anonymous_feedback
+  for insert with check (tenant_id = public.current_user_tenant());
+
+drop policy if exists anon_feedback_select_admin on public.anonymous_feedback;
+create policy anon_feedback_select_admin on public.anonymous_feedback
+  for select using (
+    tenant_id = public.current_user_tenant()
+    and public.is_admin_or_owner()
+  );
+
+-- ============================================================================
+-- 11. Seed — 5 sample FAQs + 1 announcement (per tenant via fn)
+-- ============================================================================
+create or replace function public.seed_workplace(p_tenant uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into public.faqs (tenant_id, slug, question, answer_md, category, sort_order)
+  values
+    (p_tenant, 'report-it-issue', 'How do I report an IT issue?',
+     'Go to Helpdesk and click New ticket. Describe the issue and pick a category. Our team triages within one business hour.',
+     'support', 10),
+    (p_tenant, 'support-email', 'Where is the ifBash support email?',
+     'Reach the desk at service@ifbash.com. Tickets you raise here are tracked in Helpdesk.',
+     'support', 20),
+    (p_tenant, 'vpn', 'What VPN do we use?',
+     'The corporate VPN client is provisioned on your work laptop. If you cannot connect, raise a ticket under Network.',
+     'access', 30),
+    (p_tenant, 'kb-access', 'How do I access the knowledge base?',
+     'Open the Knowledge tab in the sidebar. Search returns relevant articles ranked by similarity.',
+     'support', 40),
+    (p_tenant, 'it-contact', 'Who is my IT contact?',
+     'Your assigned agent appears on every ticket detail page. For urgent items, raise a P1 ticket.',
+     'support', 50)
+  on conflict (tenant_id, slug) do nothing;
+
+  insert into public.announcements (tenant_id, title, body_md, category, pinned, published_at, audience)
+  select p_tenant,
+         'Welcome to ifBash ITSM portal',
+         'You can raise tickets, request services, browse the knowledge base, and connect with your team here. Have feedback? Use the anonymous feedback form.',
+         'company',
+         true,
+         now(),
+         jsonb_build_object('all', true)
+  where not exists (
+    select 1 from public.announcements
+     where tenant_id = p_tenant and title = 'Welcome to ifBash ITSM portal'
+  );
+end;
+$$;
+
+revoke all on function public.seed_workplace(uuid) from public;
+grant execute on function public.seed_workplace(uuid) to authenticated, service_role;
+
+-- Seed for the default tenant
+do $$
+declare v_tenant uuid;
+begin
+  select id into v_tenant from public.tenants where slug = 'ifbash';
+  if v_tenant is not null then
+    perform public.seed_workplace(v_tenant);
+  end if;
+end $$;

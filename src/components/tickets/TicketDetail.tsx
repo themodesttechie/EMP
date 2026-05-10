@@ -127,6 +127,20 @@ export default function TicketDetail(props: Props) {
             </div>
           ) : null}
 
+          {isAgent && ticket.state === "resolved" ? (
+            <div className="rounded-xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/5 p-4 flex items-center justify-between">
+              <p className="text-sm text-slate-800 dark:text-slate-200">
+                Capture the fix as a knowledge base article so future tickets self-deflect.
+              </p>
+              <a
+                href={`/kb/from-ticket/${ticket.id}`}
+                className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700"
+              >
+                Draft article from this ticket
+              </a>
+            </div>
+          ) : null}
+
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121212]">
             <div className="flex border-b border-slate-200 dark:border-slate-800 px-3">
               {TAB_KEYS.map((k) => (

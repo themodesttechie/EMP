@@ -25,10 +25,31 @@ export const navItems: NavItem[] = [
         name: "Support",
         subItems: [
             { name: "Helpdesk", path: "/helpdesk" },
+            { name: "Problem Mgmt", path: "/problems" },
+            { name: "Change Mgmt", path: "/changes" },
+            { name: "CAB Queue", path: "/cab" },
             { name: "My Requests", path: "/my-requests" },
             { name: "Service Catalog", path: "/request-asset" },
             { name: "Approval Workflows", path: "/approval-workflows" },
             { name: "Delegations", path: "/delegations" },
+        ],
+    },
+    {
+        icon: <ShootingStarIcon />,
+        name: "Knowledge",
+        subItems: [
+            { name: "Knowledge Base", path: "/kb" },
+            { name: "FAQ", path: "/faq" },
+            { name: "Policies", path: "/policies" },
+            { name: "KB Drafts", path: "/kb/drafts" },
+        ],
+    },
+    {
+        icon: <GridIcon />,
+        name: "Reports",
+        subItems: [
+            { name: "Reports", path: "/reports" },
+            { name: "Surveys Admin", path: "/surveys/admin" },
         ],
     },
     {
@@ -54,6 +75,7 @@ export const navItems: NavItem[] = [
             { name: "Announcements", path: "/announcements" },
             { name: "Company News", path: "/company-news" },
             { name: "Appreciate", path: "/appreciate" },
+            { name: "Kudos Feed", path: "/appreciate/feed" },
             { name: "Feedback", path: "/feedback" },
             { name: "Frequently Asked Questions", path: "/faq" },
             { name: "Employee Hub", path: "/employee-hub" },

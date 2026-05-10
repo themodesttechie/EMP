@@ -656,6 +656,9 @@ export async function completeChangeAction(
   }
   void admin;
 
+  const { triggerOnChangeDone } = await import("@/lib/surveys/triggers");
+  await triggerOnChangeDone(r.id).catch(() => {});
+
   revalidatePath(`/changes/${r.number}`);
   revalidatePath("/changes");
   return { ok: true };
