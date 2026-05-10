@@ -98,7 +98,7 @@ const initialCategories: Category[] = [
     // Add more categories as needed...
 ];
 
-export default function HrPoliciesPage() {
+export default function PoliciesPage() {
     const [categories, setCategories] = useState<Category[]>(initialCategories);
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(
         null
@@ -344,7 +344,7 @@ export default function HrPoliciesPage() {
     return (
         <div>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                <PageBreadcrumb pageTitle="HR Policies" />
+                <PageBreadcrumb pageTitle="Policies" />
                 <div className="flex gap-3">
                     <button
                         onClick={openCreateCategoryModal}

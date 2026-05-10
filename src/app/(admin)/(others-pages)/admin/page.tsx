@@ -4,13 +4,13 @@ import {
     Home, FileText, ClipboardList, Bell, PieChart
 } from "lucide-react";
 import EmployeeDocumentHub from "../employee-hub/page";
-import HrPoliciesPage from "../hr-policies/page";
+import PoliciesPage from "../policies/page";
 import AnnouncementsPage from "../../(workplace)/announcements/page";
 
 const modules = [
     { name: "Dashboard", icon: Home },
     { name: "Document Hub", icon: FileText },
-    { name: "HR Policies", icon: ClipboardList },
+    { name: "Policies", icon: ClipboardList },
     { name: "Announcements", icon: Bell },
     { name: "Helpdesk", icon: PieChart },
 ];
@@ -22,8 +22,8 @@ export default function AdminDashboard() {
         switch (activeModule) {
             case "Document Hub":
                 return <EmployeeDocumentHub />;
-            case "HR Policies":
-                return <HrPoliciesPage />;
+            case "Policies":
+                return <PoliciesPage />;
             case "Announcements":
                 return <AnnouncementsPage />;
             default:

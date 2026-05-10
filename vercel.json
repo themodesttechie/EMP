@@ -1,6 +1,7 @@
 {
   "crons": [
     { "path": "/api/cron/sla-tick", "schedule": "* * * * *" },
-    { "path": "/api/cron/stale-ci-scan", "schedule": "0 9 * * 1" }
+    { "path": "/api/cron/stale-ci-scan", "schedule": "0 9 * * 1" },
+    { "path": "/api/cron/embed-pending", "schedule": "*/10 * * * *" }
   ]
 }

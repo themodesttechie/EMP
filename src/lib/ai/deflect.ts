@@ -1,12 +1,14 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/server";
+import { embedTextLogged, toPgVector } from "@/lib/embeddings/embed";
 
-// Deflection candidate (KB stub via ticket_categories — pgvector lands Sprint 6).
 export type DeflectionCandidate = {
   id: string;
   title: string;
   snippet: string;
-  source: "category" | "kb";
+  source: "kb" | "category";
+  slug?: string;
+  similarity?: number;
 };
 
 export type DeflectionResult = {
@@ -14,57 +16,76 @@ export type DeflectionResult = {
   confidence: number;
 };
 
-// Pull category descriptions whose name/description matches the draft text.
-// Acceptable bridge while kb_articles + pgvector are not yet shipped.
+const DEFAULT_THRESHOLD = Number(
+  process.env.KB_DEFLECTION_THRESHOLD || 0.75,
+);
+const MIN_TEXT_LEN = 30;
+const MAX_RESULTS = 3;
+const RPC_PREFETCH = 5;
+
+function snippet(body: string, max = 200): string {
+  const stripped = body
+    .replace(/[#*_`>~]/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return stripped.length > max ? stripped.slice(0, max).trimEnd() + "…" : stripped;
+}
+
 export async function findDeflectionCandidates(opts: {
   tenant_id: string;
   draft_text: string;
   limit?: number;
+  threshold?: number;
 }): Promise<DeflectionResult> {
   const text = (opts.draft_text || "").trim();
-  if (text.length < 30) return { kb_articles: [], confidence: 0 };
+  if (text.length < MIN_TEXT_LEN) return { kb_articles: [], confidence: 0 };
+
+  const threshold = opts.threshold ?? DEFAULT_THRESHOLD;
+
+  const embed = await embedTextLogged({
+    tenant_id: opts.tenant_id,
+    actor_id: null,
+    text,
+    related_entity_type: "deflection",
+  });
+  if (!embed.ok) return { kb_articles: [], confidence: 0 };
 
   const admin = createAdminClient();
-  // Crude ILIKE match across ticket_categories — kept simple deliberately so the
-  // pgvector swap in Sprint 6 only touches the inside of this function.
-  const tokens = text
-    .toLowerCase()
-    .replace(/[^a-z0-9 ]/g, " ")
-    .split(/\s+/)
-    .filter((t) => t.length > 3)
-    .slice(0, 6);
+  const { data, error } = await admin.rpc("kb_search_published", {
+    p_tenant: opts.tenant_id,
+    p_query: toPgVector(embed.embedding),
+    p_limit: RPC_PREFETCH,
+  });
+  if (error) {
+    console.error("[ai] deflect kb_search_published failed:", error.message);
+    return { kb_articles: [], confidence: 0 };
+  }
 
-  if (tokens.length === 0) return { kb_articles: [], confidence: 0 };
-
-  const orFilter = tokens
-    .map((t) => `name.ilike.%${t}%,description.ilike.%${t}%`)
-    .join(",");
-
-  const { data } = await admin
-    .from("ticket_categories")
-    .select("id, slug, name, description")
-    .eq("tenant_id", opts.tenant_id)
-    .eq("is_active", true)
-    .or(orFilter)
-    .limit(opts.limit ?? 3);
-
-  const rows = (data ?? []) as Array<{
+  type Row = {
     id: string;
     slug: string;
-    name: string;
-    description: string | null;
-  }>;
+    title: string;
+    body: string;
+    similarity: number;
+  };
+  const rows = ((data ?? []) as Row[])
+    .map((r) => ({ ...r, similarity: Number(r.similarity) }))
+    .filter((r) => r.similarity >= threshold)
+    .slice(0, opts.limit ?? MAX_RESULTS);
 
   if (rows.length === 0) return { kb_articles: [], confidence: 0 };
 
   return {
     kb_articles: rows.map((r) => ({
       id: r.id,
-      title: r.name,
-      snippet: r.description ?? "",
-      source: "category" as const,
+      slug: r.slug,
+      title: r.title,
+      snippet: snippet(r.body),
+      source: "kb" as const,
+      similarity: Number(r.similarity.toFixed(3)),
     })),
-    // Until real KB ships, soft-cap confidence
-    confidence: Math.min(0.5, 0.15 + rows.length * 0.1),
+    confidence: Number(rows[0].similarity.toFixed(3)),
   };
 }
